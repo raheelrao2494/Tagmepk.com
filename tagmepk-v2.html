@@ -108,7 +108,13 @@
       background: rgba(10, 22, 40, 0.88);
       backdrop-filter: blur(24px) saturate(1.5);
       border-bottom: 1px solid var(--line);
-      padding: 14px 0
+      padding: 4px 0;
+    }
+
+    @media(max-width:640px) {
+      nav.solid {
+        padding: 2px 0;
+      }
     }
 
     .nav-wrap {
@@ -2354,9 +2360,28 @@
         display: flex
       }
 
+      .nav-wrap {
+        padding-left: 0;
+        justify-content: space-between;
+      }
+
+      .nav-logo {
+        position: relative;
+        left: 0;
+        top: 0;
+        transform: none;
+        margin-right: 0;
+      }
+
+      .nav-logo img,
+      .nav-logo svg {
+        height: 52px;
+        max-height: 52px;
+      }
+
       .hero-inner {
         grid-template-columns: 1fr;
-        gap: 60px;
+        gap: 48px;
         text-align: center
       }
 
@@ -2442,6 +2467,38 @@
         grid-template-columns: 1fr 1fr
       }
 
+      .hero {
+        padding: 96px 0 40px;
+      }
+
+      .hero-pill,
+      .eyebrow,
+      .sec-title,
+      .sec-sub,
+      .hero-actions .btn-g,
+      .hero-actions .btn-outline {
+        max-width: 100%;
+      }
+
+      .hero-card-main {
+        max-width: 100%;
+      }
+
+      .f-brand img,
+      .f-brand .f-logo {
+        transform: none;
+        height: 46px;
+        max-height: 46px;
+      }
+
+      .footer-grid {
+        gap: 32px;
+      }
+
+      .footer-bottom {
+        padding-top: 24px;
+      }
+
       .stats-row {
         gap: 0
       }
@@ -2453,11 +2510,92 @@
 
     @media(max-width:640px) {
       .wrap {
-        padding: 0 20px
+        padding: 0 16px
+      }
+
+      nav {
+        padding: 6px 0;
+      }
+
+      .nav-wrap {
+        padding-left: 0;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .nav-logo img,
+      .nav-logo svg {
+        height: 92px;
+        max-height: 92px;
+      }
+
+      .f-brand img,
+      .f-brand .f-logo {
+        height: 92px;
+        max-height: 92px;
+      }
+
+      .mob-menu a {
+        font-size: 20px;
+      }
+
+      .hero {
+        padding: 80px 0 32px;
+      }
+
+      .hero-sub {
+        font-size: 15px;
+        margin: 0 auto 20px;
+        max-width: 100%;
+      }
+
+      .services-intro {
+        gap: 14px;
+      }
+
+      .services-intro .sec-title {
+        font-size: 28px;
+        line-height: 1.15;
+        max-width: 100%;
+      }
+
+      .services-intro .sec-sub {
+        font-size: 14px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .hero-card-main {
+        margin: 0 auto;
+        width: 100%;
+        max-width: 520px;
+      }
+
+      .hero-stats-row {
+        justify-content: center;
+        gap: 12px;
+      }
+
+      .hero-float-1,
+      .hero-float-2 {
+        display: none
       }
 
       .services-grid {
-        grid-template-columns: 1fr
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .services-grid>.svc-card,
+      .services-grid .full-span {
+        grid-column: auto !important;
+      }
+
+      .services-grid .full-span {
+        grid-column: auto !important;
       }
 
       .port-grid {
@@ -2474,6 +2612,12 @@
 
       .footer-grid {
         grid-template-columns: 1fr
+      }
+
+      .footer-grid .f-col,
+      .footer-grid .f-news,
+      .footer-grid .f-brand {
+        width: 100%;
       }
 
       .form-row-2 {
@@ -2495,6 +2639,64 @@
       .hero-float-1,
       .hero-float-2 {
         display: none
+      }
+
+      .svc-card {
+        cursor: pointer;
+        padding: 18px 16px;
+        min-height: 180px;
+      }
+
+      .svc-card:not(.expanded) {
+        min-height: auto;
+      }
+
+      .svc-card:not(.expanded) p,
+      .svc-card:not(.expanded) .svc-tags,
+      .svc-card:not(.expanded) .svc-arrow {
+        display: none;
+      }
+
+      .svc-card.expanded p,
+      .svc-card.expanded .svc-tags,
+      .svc-card.expanded .svc-arrow {
+        display: block;
+      }
+
+      .svc-card h3 {
+        font-size: 16px;
+        line-height: 1.4;
+        margin-bottom: 12px;
+      }
+
+      .svc-card p {
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      .svc-card .svc-num {
+        font-size: 12px;
+        margin-bottom: 12px;
+      }
+
+      .svc-card .svc-icon-wrap {
+        width: 46px;
+        height: 46px;
+        font-size: 20px;
+        margin-bottom: 14px;
+      }
+
+      .svc-card .svc-arrow {
+        top: 18px;
+        right: 18px;
+      }
+
+      .svc-card.expanded .svc-arrow {
+        transform: rotate(45deg);
+      }
+
+      .svc-card.expanded {
+        background: rgba(15, 25, 42, .98);
       }
     }
   </style>
@@ -2778,7 +2980,7 @@
           <div class="svc-tags"><span class="s-tag">GMB Setup</span><span class="s-tag">Local SEO</span><span
               class="s-tag">Reviews</span><span class="s-tag">Maps</span></div>
         </div>
-        <div class="svc-card rv" style="grid-column:span 3">
+        <div class="svc-card rv full-span">
           <div class="svc-arrow"><i class="ti ti-arrow-up-right"></i></div>
           <div class="svc-num">07</div>
           <div class="svc-icon-wrap" style="background:rgba(26,110,255,.12);color:var(--blue)"><i
@@ -3689,6 +3891,22 @@
       btn.style.border = '1px solid rgba(45,198,83,.4)';
       btn.disabled = true;
     }
+
+    // MOBILE SERVICE ACCORDION
+    document.addEventListener('DOMContentLoaded', () => {
+      const mobileToggle = () => window.innerWidth <= 640;
+      document.querySelectorAll('.svc-card').forEach(card => {
+        card.addEventListener('click', () => {
+          if (!mobileToggle()) return;
+          card.classList.toggle('expanded');
+        });
+      });
+      window.addEventListener('resize', () => {
+        if (!mobileToggle()) {
+          document.querySelectorAll('.svc-card.expanded').forEach(card => card.classList.remove('expanded'));
+        }
+      });
+    });
   </script>
 </body>
 
