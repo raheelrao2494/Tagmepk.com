@@ -1,0 +1,3695 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TagMePK – AI Marketing Agency</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    :root {
+      --navy: #0a1628;
+      --navy-mid: #0f2040;
+      --green: #2dc653;
+      --green-dim: rgba(45, 198, 83, 0.12);
+      --green-glow: rgba(45, 198, 83, 0.25);
+      --blue: #1a6eff;
+      --blue-dim: rgba(26, 110, 255, 0.12);
+      --orange: #f97316;
+      --text: #eef2ff;
+      --text-sec: rgba(238, 242, 255, 0.58);
+      --text-dim: rgba(238, 242, 255, 0.32);
+      --line: rgba(255, 255, 255, 0.07);
+      --line-strong: rgba(255, 255, 255, 0.13);
+      --glass: rgba(10, 22, 40, 0.6);
+      --r: 14px;
+      --r-lg: 24px;
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      background: var(--navy);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      overflow-x: hidden
+    }
+
+    .sora {
+      font-family: 'Sora', sans-serif
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    button {
+      cursor: pointer;
+      font-family: inherit;
+      border: none;
+      background: none
+    }
+
+    /* CANVAS PARTICLES */
+    #canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: .65;
+      /* brighter stars */
+    }
+
+    /* LAYOUT */
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px;
+      position: relative;
+      z-index: 2
+    }
+
+    section {
+      position: relative;
+      z-index: 2
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 0;
+      transition: all .4s cubic-bezier(.4, 0, .2, 1);
+      background: transparent;
+      /* keep header transparent by default */
+    }
+
+    nav.solid {
+      background: rgba(10, 22, 40, 0.88);
+      backdrop-filter: blur(24px) saturate(1.5);
+      border-bottom: 1px solid var(--line);
+      padding: 14px 0
+    }
+
+    .nav-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-left: 220px;
+      /* reduced to match smaller logo */
+    }
+
+    /* SVG logo in nav */
+    .nav-logo {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      gap: 0;
+      height: auto;
+      flex-shrink: 0;
+    }
+
+    .nav-logo svg,
+    .nav-logo img {
+      height: 160px;
+      /* slightly smaller than previous large size */
+      width: auto;
+      display: block;
+      max-height: 160px;
+    }
+
+    .f-brand img,
+    .f-brand .f-logo {
+      height: 120px;
+      /* keep layout height */
+      width: auto;
+      display: block;
+      max-height: 120px;
+      transform: scale(1.3333);
+      /* visually enlarge to match header (120 * 1.3333 = 160) */
+      transform-origin: center center;
+      /* allow scaled image to overflow without expanding footer */
+      overflow: visible;
+      margin: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-sec);
+      letter-spacing: .01em;
+      transition: color .2s;
+      position: relative
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--green);
+      transform: scaleX(0);
+      transition: transform .25s;
+      transform-origin: left
+    }
+
+    .nav-links a:hover {
+      color: var(--text)
+    }
+
+    .nav-links a:hover::after {
+      transform: scaleX(1)
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green);
+      color: #fff;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all .25s;
+      letter-spacing: .01em
+    }
+
+    .nav-btn:hover {
+      background: #25b047;
+      transform: translateY(-1px)
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      padding: 6px
+    }
+
+    .hamburger span {
+      width: 22px;
+      height: 1.5px;
+      background: var(--text-sec);
+      border-radius: 2px;
+      transition: all .3s
+    }
+
+    .mob-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 22, 40, .97);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px
+    }
+
+    .mob-menu.open {
+      display: flex
+    }
+
+    .mob-menu a {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--text-sec);
+      transition: color .2s
+    }
+
+    .mob-menu a:hover {
+      color: var(--green)
+    }
+
+    .mob-close {
+      position: absolute;
+      top: 24px;
+      right: 28px;
+      font-size: 28px;
+      color: var(--text-sec);
+      background: none;
+      border: none;
+      cursor: pointer
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 140px 0 100px;
+      overflow: hidden
+    }
+
+    .hero-aura {
+      position: absolute;
+      inset: 0;
+      overflow: hidden
+    }
+
+    .aura {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      will-change: transform
+    }
+
+    .aura-1 {
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(26, 110, 255, .16) 0%, transparent 65%);
+      top: -200px;
+      left: -150px;
+      animation: float1 14s ease-in-out infinite
+    }
+
+    .aura-2 {
+      width: 550px;
+      height: 550px;
+      background: radial-gradient(circle, rgba(45, 198, 83, .10) 0%, transparent 65%);
+      bottom: -100px;
+      right: -100px;
+      animation: float2 18s ease-in-out infinite
+    }
+
+    .aura-3 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(249, 115, 22, .07) 0%, transparent 65%);
+      top: 40%;
+      left: 55%;
+      animation: float1 22s ease-in-out infinite 4s
+    }
+
+    @keyframes float1 {
+
+      0%,
+      100% {
+        transform: translate(0, 0)
+      }
+
+      40% {
+        transform: translate(40px, -30px)
+      }
+
+      70% {
+        transform: translate(-20px, 40px)
+      }
+    }
+
+    @keyframes float2 {
+
+      0%,
+      100% {
+        transform: translate(0, 0)
+      }
+
+      35% {
+        transform: translate(-35px, 25px)
+      }
+
+      75% {
+        transform: translate(30px, -40px)
+      }
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(255, 255, 255, .022) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .022) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, #000 0%, transparent 100%)
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center
+    }
+
+    .hero-left {
+      .hero-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(45, 198, 83, .09);
+        border: 1px solid rgba(45, 198, 83, .22);
+        padding: 7px 18px;
+        border-radius: 100px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--green);
+        margin-bottom: 32px;
+        letter-spacing: .02em
+      }
+    }
+
+
+    .hero-pill-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--green);
+      animation: blink 2s infinite
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .3
+      }
+    }
+
+    h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(36px, 4.5vw, 62px);
+      font-weight: 800;
+      line-height: 1.07;
+      letter-spacing: -.025em;
+      margin-bottom: 24px
+    }
+
+    .h1-green {
+      color: var(--green)
+    }
+
+    .h1-blue {
+      background: linear-gradient(135deg, #6eb7ff, var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text
+    }
+
+    .hero-sub {
+      font-size: clamp(15px, 1.4vw, 18px);
+      color: var(--text-sec);
+      line-height: 1.75;
+      margin-bottom: 40px;
+      max-width: 500px;
+      font-weight: 400
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap
+    }
+
+    .btn-g {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: var(--green);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      transition: all .3s;
+      letter-spacing: .01em
+    }
+
+    .btn-g:hover {
+      background: #25b047;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(45, 198, 83, .35)
+    }
+
+    .btn-g .ti {
+      font-size: 17px
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: transparent;
+      color: var(--text);
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 500;
+      border: 1px solid var(--line-strong);
+      transition: all .3s
+    }
+
+    .btn-outline:hover {
+      border-color: rgba(255, 255, 255, .25);
+      background: rgba(255, 255, 255, .04);
+      transform: translateY(-3px)
+    }
+
+    /* RIGHT PANEL */
+    .hero-right {
+      position: relative
+    }
+
+    .hero-card-main {
+      background: rgba(15, 32, 64, .7);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--line-strong);
+      border-radius: var(--r-lg);
+      padding: 32px;
+      position: relative;
+      overflow: hidden
+    }
+
+    .hero-card-main::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(45, 198, 83, .05), rgba(26, 110, 255, .05));
+      pointer-events: none
+    }
+
+    .hc-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--text-dim);
+      margin-bottom: 20px
+    }
+
+    .hc-metrics {
+      display: flex;
+      flex-direction: column;
+      gap: 16px
+    }
+
+    .hc-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px
+    }
+
+    .hc-name {
+      font-size: 14px;
+      color: var(--text-sec);
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .hc-name .ti {
+      font-size: 16px;
+      color: var(--green)
+    }
+
+    .hc-bar-wrap {
+      flex: 1;
+      height: 6px;
+      background: rgba(255, 255, 255, .07);
+      border-radius: 100px;
+      overflow: hidden
+    }
+
+    .hc-bar {
+      height: 100%;
+      border-radius: 100px;
+      background: linear-gradient(90deg, var(--blue), var(--green));
+      animation: barIn 1.4s ease forwards;
+      transform-origin: left;
+      transform: scaleX(0)
+    }
+
+    @keyframes barIn {
+      to {
+        transform: scaleX(1)
+      }
+    }
+
+    .hc-pct {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--green);
+      min-width: 38px;
+      text-align: right
+    }
+
+    .hc-divider {
+      height: 1px;
+      background: var(--line);
+      margin: 20px 0
+    }
+
+    .hc-bottom {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px
+    }
+
+    .hc-stat {
+      text-align: center
+    }
+
+    .hc-stat strong {
+      display: block;
+      font-family: 'Sora', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1
+    }
+
+    .hc-stat span {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-top: 2px;
+      display: block
+    }
+
+    .hero-float-1 {
+      position: absolute;
+      top: -18px;
+      right: 20px;
+      background: rgba(45, 198, 83, .12);
+      border: 1px solid rgba(45, 198, 83, .25);
+      backdrop-filter: blur(12px);
+      border-radius: 12px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--green);
+      animation: floatY 4s ease-in-out infinite
+    }
+
+    .hero-float-2 {
+      position: absolute;
+      bottom: -18px;
+      left: 20px;
+      background: rgba(26, 110, 255, .12);
+      border: 1px solid rgba(26, 110, 255, .25);
+      backdrop-filter: blur(12px);
+      border-radius: 12px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #6eb7ff;
+      animation: floatY 5s ease-in-out infinite 1.5s
+    }
+
+    @keyframes floatY {
+
+      0%,
+      100% {
+        transform: translateY(0)
+      }
+
+      50% {
+        transform: translateY(-8px)
+      }
+    }
+
+    .hero-stats-row {
+      display: flex;
+      gap: 40px;
+      margin-top: 48px;
+      padding-top: 40px;
+      border-top: 1px solid var(--line);
+      flex-wrap: wrap
+    }
+
+    .hs-item strong {
+      display: block;
+      font-family: 'Sora', sans-serif;
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--green);
+      line-height: 1
+    }
+
+    .hs-item span {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-top: 3px;
+      display: block
+    }
+
+    /* ─── TRUSTED ─── */
+    .trusted {
+      padding: 48px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line)
+    }
+
+    .trusted-label {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-dim);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 28px
+    }
+
+    .logo-scroll {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap
+    }
+
+    .logo-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 20px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-dim);
+      transition: all .25s;
+      background: rgba(255, 255, 255, .025)
+    }
+
+    .logo-pill .ti {
+      font-size: 16px;
+      color: var(--text-dim);
+      transition: color .25s
+    }
+
+    .logo-pill:hover {
+      border-color: rgba(45, 198, 83, .3);
+      color: var(--text-sec)
+    }
+
+    .logo-pill:hover .ti {
+      color: var(--green)
+    }
+
+    /* ─── SECTION COMMON ─── */
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 14px
+    }
+
+    .eyebrow::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--green)
+    }
+
+    .sec-title {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(28px, 3.8vw, 50px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -.025em;
+      margin-bottom: 16px
+    }
+
+    .sec-sub {
+      font-size: 17px;
+      color: var(--text-sec);
+      line-height: 1.75;
+      max-width: 520px
+    }
+
+    /* ─── WHY ─── */
+    .why {
+      padding: 110px 0
+    }
+
+    .why-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 80px;
+      align-items: start
+    }
+
+    .why-left {
+      position: sticky;
+      top: 120px
+    }
+
+    .why-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--line)
+    }
+
+    .why-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 28px 32px;
+      background: var(--navy);
+      transition: background .25s;
+      cursor: default
+    }
+
+    .why-item:hover {
+      background: var(--navy-mid)
+    }
+
+    .why-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 22px
+    }
+
+    .wi-blue {
+      background: rgba(26, 110, 255, .12);
+      color: var(--blue)
+    }
+
+    .wi-green {
+      background: rgba(45, 198, 83, .12);
+      color: var(--green)
+    }
+
+    .wi-orange {
+      background: rgba(249, 115, 22, .12);
+      color: var(--orange)
+    }
+
+    .why-item h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 5px;
+      letter-spacing: -.01em
+    }
+
+    .why-item p {
+      font-size: 14px;
+      color: var(--text-sec);
+      line-height: 1.65
+    }
+
+    /* ─── SERVICES ─── */
+    .services {
+      padding: 110px 0;
+      background: linear-gradient(180deg, transparent, rgba(15, 32, 64, .4) 50%, transparent)
+    }
+
+    .services-intro {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 40px;
+      margin-bottom: 60px;
+      flex-wrap: wrap
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--line)
+    }
+
+    .svc-card {
+      background: var(--navy);
+      padding: 36px 30px;
+      position: relative;
+      overflow: hidden;
+      transition: background .3s;
+      cursor: default
+    }
+
+    .svc-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--blue), var(--green));
+      transform: scaleX(0);
+      transition: transform .4s cubic-bezier(.4, 0, .2, 1);
+      transform-origin: left
+    }
+
+    .svc-card:hover {
+      background: var(--navy-mid)
+    }
+
+    .svc-card:hover::after {
+      transform: scaleX(1)
+    }
+
+    .svc-num {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      color: var(--text-dim);
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .svc-num::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--line)
+    }
+
+    .svc-icon-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+      transition: transform .3s
+    }
+
+    .svc-card:hover .svc-icon-wrap {
+      transform: scale(1.08)
+    }
+
+    .svc-card h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: -.02em
+    }
+
+    .svc-card p {
+      font-size: 14px;
+      color: var(--text-sec);
+      line-height: 1.7;
+      margin-bottom: 20px
+    }
+
+    .svc-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px
+    }
+
+    .s-tag {
+      padding: 4px 11px;
+      background: rgba(255, 255, 255, .05);
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: .02em
+    }
+
+    .svc-arrow {
+      position: absolute;
+      top: 28px;
+      right: 28px;
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--text-dim);
+      transition: all .3s
+    }
+
+    .svc-card:hover .svc-arrow {
+      border-color: var(--green);
+      color: var(--green);
+      transform: translate(2px, -2px)
+    }
+
+    /* ─── INDUSTRIES ─── */
+    .industries {
+      padding: 90px 0
+    }
+
+    .industries-inner {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 80px;
+      align-items: center
+    }
+
+    .ind-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px
+    }
+
+    .ind-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      font-size: 14px;
+      color: var(--text-sec);
+      transition: all .25s;
+      background: rgba(255, 255, 255, .025)
+    }
+
+    .ind-chip .ti {
+      font-size: 16px;
+      color: var(--text-dim);
+      transition: color .25s
+    }
+
+    .ind-chip:hover {
+      border-color: rgba(45, 198, 83, .35);
+      color: var(--text);
+      background: rgba(45, 198, 83, .06)
+    }
+
+    .ind-chip:hover .ti {
+      color: var(--green)
+    }
+
+    /* ─── PROCESS ─── */
+    .process {
+      padding: 110px 0;
+      background: rgba(15, 32, 64, .3)
+    }
+
+    .process-header {
+      text-align: center;
+      margin-bottom: 72px
+    }
+
+    .process-header .sec-sub {
+      margin: 0 auto
+    }
+
+    .process-spine {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto
+    }
+
+    .process-spine::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(180deg, transparent, var(--blue) 15%, var(--green) 85%, transparent);
+      transform: translateX(-50%)
+    }
+
+    .p-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 0;
+      align-items: center;
+      margin-bottom: 0
+    }
+
+    .p-row:last-child .p-content {
+      margin-bottom: 0
+    }
+
+    .p-content {
+      padding: 24px 40px
+    }
+
+    .p-content.right {
+      text-align: right
+    }
+
+    .p-node {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--navy);
+      border: 1px solid var(--line-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Sora', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-dim);
+      flex-shrink: 0;
+      transition: all .4s;
+      position: relative;
+      z-index: 1
+    }
+
+    .p-node.active,
+    .p-node:hover {
+      border-color: var(--green);
+      color: var(--green);
+      box-shadow: 0 0 30px rgba(45, 198, 83, .2)
+    }
+
+    .p-label {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px
+    }
+
+    .p-desc {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.6
+    }
+
+    /* ─── AI SOLUTIONS ─── */
+    .ai-sol {
+      padding: 110px 0
+    }
+
+    .ai-sol-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 80px;
+      align-items: center
+    }
+
+    .ai-sol-right {
+      display: flex;
+      flex-direction: column;
+      gap: 12px
+    }
+
+    .sol-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 22px 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      background: rgba(255, 255, 255, .025);
+      transition: all .3s;
+      cursor: default
+    }
+
+    .sol-card:hover {
+      border-color: rgba(45, 198, 83, .25);
+      background: rgba(45, 198, 83, .04);
+      transform: translateX(4px)
+    }
+
+    .sol-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0
+    }
+
+    .sol-card h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 3px
+    }
+
+    .sol-card p {
+      font-size: 13px;
+      color: var(--text-sec);
+      line-height: 1.6
+    }
+
+    .ai-visual {
+      background: rgba(15, 32, 64, .7);
+      border: 1px solid var(--line-strong);
+      border-radius: var(--r-lg);
+      padding: 32px;
+      backdrop-filter: blur(20px);
+      position: relative;
+      overflow: hidden
+    }
+
+    .ai-visual::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(45, 198, 83, .12), transparent 65%);
+      border-radius: 50%
+    }
+
+    .ai-visual-label {
+      font-size: 12px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .ai-visual-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--line)
+    }
+
+    .ai-metric-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .ai-metric-row:last-child {
+      border-bottom: none
+    }
+
+    .ami-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0
+    }
+
+    .ami-info {
+      flex: 1
+    }
+
+    .ami-name {
+      font-size: 14px;
+      font-weight: 500
+    }
+
+    .ami-sub {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-top: 2px
+    }
+
+    .ami-val {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--green)
+    }
+
+    .ami-badge {
+      font-size: 11px;
+      padding: 3px 9px;
+      border-radius: 100px;
+      font-weight: 600
+    }
+
+    .badge-up {
+      background: rgba(45, 198, 83, .12);
+      color: var(--green)
+    }
+
+    .badge-live {
+      background: rgba(26, 110, 255, .12);
+      color: #6eb7ff
+    }
+
+    /* ─── STATS ─── */
+    .stats-band {
+      padding: 80px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line)
+    }
+
+    .stats-row {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0
+    }
+
+    .stat-col {
+      text-align: center;
+      padding: 24px 48px;
+      position: relative
+    }
+
+    .stat-col+.stat-col::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 20%;
+      bottom: 20%;
+      width: 1px;
+      background: var(--line)
+    }
+
+    .stat-num {
+      font-family: 'Sora', sans-serif;
+      font-size: 54px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -.03em;
+      color: var(--green);
+      display: block
+    }
+
+    .stat-lbl {
+      font-size: 14px;
+      color: var(--text-sec);
+      margin-top: 6px
+    }
+
+    /* ─── PORTFOLIO ─── */
+    .portfolio {
+      padding: 110px 0
+    }
+
+    .port-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 40px;
+      margin-bottom: 52px;
+      flex-wrap: wrap
+    }
+
+    .port-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px
+    }
+
+    .port-card {
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .025);
+      transition: all .35s;
+      cursor: pointer;
+      position: relative
+    }
+
+    .port-card:hover {
+      border-color: rgba(45, 198, 83, .25);
+      transform: translateY(-6px)
+    }
+
+    .port-thumb {
+      height: 190px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden
+    }
+
+    .port-thumb .ti {
+      font-size: 52px;
+      color: rgba(255, 255, 255, .25)
+    }
+
+    .port-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(45, 198, 83, .12);
+      opacity: 0;
+      transition: opacity .3s
+    }
+
+    .port-card:hover .port-overlay {
+      opacity: 1
+    }
+
+    .port-info {
+      padding: 22px 24px
+    }
+
+    .port-cat {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--green);
+      margin-bottom: 8px
+    }
+
+    .port-info h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      letter-spacing: -.01em
+    }
+
+    .port-info p {
+      font-size: 13px;
+      color: var(--text-sec);
+      line-height: 1.6
+    }
+
+    /* ─── TESTIMONIALS ─── */
+    .testimonials {
+      padding: 110px 0;
+      background: rgba(15, 32, 64, .3)
+    }
+
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 56px
+    }
+
+    .t-card {
+      background: rgba(255, 255, 255, .03);
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      padding: 32px 28px;
+      position: relative;
+      transition: all .3s
+    }
+
+    .t-card:hover {
+      border-color: rgba(45, 198, 83, .2);
+      transform: translateY(-4px)
+    }
+
+    .t-quote {
+      font-size: 40px;
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      color: var(--green);
+      opacity: .3;
+      line-height: 1;
+      margin-bottom: 12px
+    }
+
+    .t-text {
+      font-size: 15px;
+      color: var(--text-sec);
+      line-height: 1.75;
+      margin-bottom: 24px;
+      font-style: italic
+    }
+
+    .t-stars {
+      color: var(--orange);
+      font-size: 13px;
+      letter-spacing: 2px;
+      margin-bottom: 20px
+    }
+
+    .t-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-top: 1px solid var(--line);
+      padding-top: 20px
+    }
+
+    .t-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      flex-shrink: 0
+    }
+
+    .t-name {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 2px
+    }
+
+    .t-role {
+      font-size: 12px;
+      color: var(--text-dim)
+    }
+
+    /* ─── PRICING ─── */
+    .pricing {
+      padding: 110px 0
+    }
+
+    .price-header {
+      text-align: center;
+      margin-bottom: 56px
+    }
+
+    .price-header .sec-sub {
+      margin: 0 auto
+    }
+
+    .price-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      align-items: start
+    }
+
+    .p-card {
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      padding: 38px 32px;
+      background: rgba(255, 255, 255, .025);
+      transition: all .3s;
+      position: relative
+    }
+
+    .p-card:hover {
+      border-color: rgba(255, 255, 255, .2);
+      transform: translateY(-4px)
+    }
+
+    .p-card.feat {
+      background: linear-gradient(160deg, rgba(45, 198, 83, .08), rgba(26, 110, 255, .06));
+      border-color: rgba(45, 198, 83, .3)
+    }
+
+    .p-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--green);
+      color: #fff;
+      padding: 4px 20px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      letter-spacing: .04em
+    }
+
+    .p-tier {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--text-dim);
+      margin-bottom: 16px
+    }
+
+    .p-price {
+      font-family: 'Sora', sans-serif;
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -.03em;
+      margin-bottom: 4px;
+      color: var(--text)
+    }
+
+    .p-price sup {
+      font-size: 22px;
+      vertical-align: top;
+      margin-top: 10px;
+      display: inline-block
+    }
+
+    .p-mo {
+      font-size: 15px;
+      color: var(--text-dim);
+      font-weight: 400;
+      margin-left: 4px
+    }
+
+    .p-desc {
+      font-size: 14px;
+      color: var(--text-sec);
+      margin: 16px 0 28px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--line);
+      line-height: 1.65
+    }
+
+    .p-features {
+      list-style: none;
+      margin-bottom: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px
+    }
+
+    .p-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-sec)
+    }
+
+    .p-features li .ti {
+      font-size: 16px;
+      color: var(--green);
+      flex-shrink: 0;
+      margin-top: 1px
+    }
+
+    .p-cta {
+      display: block;
+      width: 100%;
+      padding: 13px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      text-align: center;
+      transition: all .3s;
+      letter-spacing: .01em
+    }
+
+    .p-cta-ghost {
+      border: 1px solid var(--line-strong);
+      color: var(--text);
+      background: transparent
+    }
+
+    .p-cta-ghost:hover {
+      border-color: var(--green);
+      color: var(--green)
+    }
+
+    .p-cta-solid {
+      background: var(--green);
+      color: #fff;
+      border: none
+    }
+
+    .p-cta-solid:hover {
+      background: #25b047;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(45, 198, 83, .3)
+    }
+
+    /* ─── FAQ ─── */
+    .faq {
+      padding: 110px 0;
+      background: rgba(15, 32, 64, .25)
+    }
+
+    .faq-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 80px;
+      align-items: start
+    }
+
+    .faq-left {
+      position: sticky;
+      top: 120px
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--line)
+    }
+
+    .faq-item {
+      background: var(--navy)
+    }
+
+    .faq-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      text-align: left;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      gap: 16px;
+      transition: color .2s
+    }
+
+    .faq-btn:hover {
+      color: var(--green)
+    }
+
+    .faq-btn .ti {
+      font-size: 20px;
+      color: var(--text-dim);
+      transition: transform .35s, color .2s;
+      flex-shrink: 0
+    }
+
+    .faq-btn.open {
+      color: var(--green)
+    }
+
+    .faq-btn.open .ti {
+      transform: rotate(45deg);
+      color: var(--green)
+    }
+
+    .faq-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .38s cubic-bezier(.4, 0, .2, 1)
+    }
+
+    .faq-body.open {
+      max-height: 300px
+    }
+
+    .faq-body-inner {
+      padding: 0 24px 20px;
+      font-size: 14px;
+      color: var(--text-sec);
+      line-height: 1.75
+    }
+
+    /* ─── BLOG ─── */
+    .blog {
+      padding: 110px 0
+    }
+
+    .blog-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 40px;
+      margin-bottom: 52px;
+      flex-wrap: wrap
+    }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px
+    }
+
+    .b-card {
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      background: rgba(255, 255, 255, .025);
+      transition: all .3s;
+      cursor: pointer
+    }
+
+    .b-card:hover {
+      border-color: rgba(45, 198, 83, .25);
+      transform: translateY(-5px)
+    }
+
+    .b-thumb {
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid var(--line);
+      position: relative
+    }
+
+    .b-thumb .ti {
+      font-size: 44px;
+      color: rgba(255, 255, 255, .2)
+    }
+
+    .b-body {
+      padding: 24px
+    }
+
+    .b-cat {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--green);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .b-cat .ti {
+      font-size: 13px
+    }
+
+    .b-body h3 {
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.5;
+      margin-bottom: 8px;
+      letter-spacing: -.01em
+    }
+
+    .b-body p {
+      font-size: 13px;
+      color: var(--text-sec);
+      line-height: 1.65
+    }
+
+    .b-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line)
+    }
+
+    .b-meta .ti {
+      font-size: 14px
+    }
+
+    /* ─── CTA SECTION ─── */
+    .cta-band {
+      padding: 120px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden
+    }
+
+    .cta-aura {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(45, 198, 83, .09), transparent)
+    }
+
+    .cta-band h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(30px, 4.5vw, 56px);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -.025em;
+      margin-bottom: 20px
+    }
+
+    .cta-band p {
+      font-size: 18px;
+      color: var(--text-sec);
+      max-width: 560px;
+      margin: 0 auto 44px;
+      line-height: 1.75
+    }
+
+    .cta-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap
+    }
+
+    /* ─── CONTACT ─── */
+    .contact {
+      padding: 110px 0
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 72px;
+      align-items: start
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 20px
+    }
+
+    .c-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      background: rgba(255, 255, 255, .025);
+      transition: border-color .25s
+    }
+
+    .c-item:hover {
+      border-color: rgba(45, 198, 83, .25)
+    }
+
+    .c-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(45, 198, 83, .1);
+      border: 1px solid rgba(45, 198, 83, .2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--green);
+      flex-shrink: 0
+    }
+
+    .c-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--text-dim);
+      margin-bottom: 3px
+    }
+
+    .c-val {
+      font-size: 14px;
+      color: var(--text-sec)
+    }
+
+    .wa-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #25D366;
+      color: #fff;
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      transition: all .3s
+    }
+
+    .wa-cta .ti {
+      font-size: 20px
+    }
+
+    .wa-cta:hover {
+      background: #1ebe5d;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(37, 211, 102, .3)
+    }
+
+    .hours-box {
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      padding: 22px
+    }
+
+    .hours-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .hours-title .ti {
+      font-size: 16px;
+      color: var(--green)
+    }
+
+    .h-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--text-sec);
+      padding: 5px 0
+    }
+
+    .open-badge {
+      font-size: 10px;
+      background: rgba(45, 198, 83, .15);
+      color: var(--green);
+      padding: 2px 8px;
+      border-radius: 100px;
+      font-weight: 700
+    }
+
+    .cf {
+      background: rgba(15, 32, 64, .6);
+      border: 1px solid var(--line-strong);
+      border-radius: var(--r-lg);
+      padding: 40px;
+      backdrop-filter: blur(20px)
+    }
+
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px
+    }
+
+    .fg {
+      margin-bottom: 16px
+    }
+
+    .fg label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-sec);
+      margin-bottom: 7px
+    }
+
+    .fg input,
+    .fg select,
+    .fg textarea {
+      width: 100%;
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid var(--line-strong);
+      border-radius: 9px;
+      padding: 12px 16px;
+      font-size: 14px;
+      color: var(--text);
+      font-family: inherit;
+      outline: none;
+      transition: border-color .25s, background .25s
+    }
+
+    .fg input:focus,
+    .fg select:focus,
+    .fg textarea:focus {
+      border-color: var(--green);
+      background: rgba(45, 198, 83, .04)
+    }
+
+    .fg input::placeholder,
+    .fg textarea::placeholder {
+      color: var(--text-dim)
+    }
+
+    .fg select option {
+      background: var(--navy-mid);
+      color: var(--text)
+    }
+
+    .fg textarea {
+      resize: vertical;
+      min-height: 110px
+    }
+
+    .form-sub {
+      width: 100%;
+      padding: 14px;
+      background: var(--green);
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      transition: all .3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      letter-spacing: .02em
+    }
+
+    .form-sub .ti {
+      font-size: 18px
+    }
+
+    .form-sub:hover {
+      background: #25b047;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 36px rgba(45, 198, 83, .35)
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: rgba(6, 14, 30, 1);
+      border-top: 1px solid var(--line);
+      padding: 58px 0 26px;
+      /* ~20% smaller from original */
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 1fr 1fr;
+      gap: 42px;
+      /* ~20% smaller */
+      margin-bottom: 42px;
+    }
+
+    .f-brand {
+      .f-brand p {
+        font-size: 14px;
+        color: var(--text-sec);
+        line-height: 1.7;
+        margin: 12px 0 18px;
+        /* slightly reduced */
+      }
+    }
+
+
+    .f-socials {
+      display: flex;
+      gap: 10px
+    }
+
+    .f-soc {
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--text-dim);
+      transition: all .25s
+    }
+
+    .f-soc:hover {
+      border-color: rgba(45, 198, 83, .4);
+      color: var(--green)
+    }
+
+    .f-col h4 {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--text-dim);
+      margin-bottom: 18px
+    }
+
+    .f-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px
+    }
+
+    .f-links a {
+      font-size: 14px;
+      color: var(--text-sec);
+      transition: color .2s;
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .f-links a .ti {
+      font-size: 14px;
+      opacity: .5;
+      transition: opacity .2s
+    }
+
+    .f-links a:hover {
+      color: var(--green)
+    }
+
+    .f-links a:hover .ti {
+      opacity: 1
+    }
+
+    .f-news p {
+      font-size: 13px;
+      color: var(--text-sec);
+      margin-bottom: 14px;
+      line-height: 1.65
+    }
+
+    .nl-form {
+      display: flex;
+      gap: 8px
+    }
+
+    .nl-form input {
+      flex: 1;
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: var(--text);
+      font-family: inherit;
+      outline: none;
+      transition: border-color .25s
+    }
+
+    .nl-form input:focus {
+      border-color: var(--green)
+    }
+
+    .nl-form input::placeholder {
+      color: var(--text-dim)
+    }
+
+    .nl-form button {
+      background: var(--green);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: background .2s
+    }
+
+    .nl-form button:hover {
+      background: #25b047
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--line);
+      padding-top: 22px;
+      /* ~20% smaller */
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px
+    }
+
+    .footer-bottom p {
+      font-size: 13px;
+      color: var(--text-dim)
+    }
+
+    .f-legal {
+      display: flex;
+      gap: 24px
+    }
+
+    .f-legal a {
+      font-size: 13px;
+      color: var(--text-dim);
+      transition: color .2s
+    }
+
+    .f-legal a:hover {
+      color: var(--green)
+    }
+
+    /* ─── FLOATS ─── */
+    .float-wa {
+      position: fixed;
+      bottom: 84px;
+      right: 26px;
+      width: 54px;
+      height: 54px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      box-shadow: 0 4px 24px rgba(37, 211, 102, .4);
+      z-index: 50;
+      transition: transform .25s
+    }
+
+    .float-wa:hover {
+      transform: scale(1.1)
+    }
+
+    .float-wa .ti {
+      font-size: 26px;
+      color: #fff
+    }
+
+    .float-top {
+      position: fixed;
+      bottom: 22px;
+      right: 26px;
+      width: 46px;
+      height: 46px;
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid var(--line-strong);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--text-dim);
+      z-index: 50;
+      cursor: pointer;
+      transition: all .25s;
+      opacity: 0;
+      pointer-events: none
+    }
+
+    .float-top.vis {
+      opacity: 1;
+      pointer-events: all
+    }
+
+    .float-top:hover {
+      background: rgba(45, 198, 83, .1);
+      border-color: rgba(45, 198, 83, .3);
+      color: var(--green)
+    }
+
+    /* ─── REVEAL ─── */
+    .rv {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .65s cubic-bezier(.4, 0, .2, 1), transform .65s cubic-bezier(.4, 0, .2, 1)
+    }
+
+    .rv.in {
+      opacity: 1;
+      transform: none
+    }
+
+    .rv-l {
+      opacity: 0;
+      transform: translateX(-28px);
+      transition: opacity .65s cubic-bezier(.4, 0, .2, 1), transform .65s cubic-bezier(.4, 0, .2, 1)
+    }
+
+    .rv-l.in {
+      opacity: 1;
+      transform: none
+    }
+
+    .rv-r {
+      opacity: 0;
+      transform: translateX(28px);
+      transition: opacity .65s cubic-bezier(.4, 0, .2, 1), transform .65s cubic-bezier(.4, 0, .2, 1)
+    }
+
+    .rv-r.in {
+      opacity: 1;
+      transform: none
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media(max-width:1024px) {
+
+      .nav-links,
+      .nav-btn {
+        display: none
+      }
+
+      .hamburger {
+        display: flex
+      }
+
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 60px;
+        text-align: center
+      }
+
+      .hero-sub {
+        margin-left: auto;
+        margin-right: auto
+      }
+
+      .hero-actions {
+        justify-content: center
+      }
+
+      .hero-stats-row {
+        justify-content: center
+      }
+
+      .why-layout {
+        grid-template-columns: 1fr
+      }
+
+      .why-left {
+        position: static
+      }
+
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .industries-inner {
+        grid-template-columns: 1fr
+      }
+
+      .process-spine::before {
+        display: none
+      }
+
+      .p-row {
+        grid-template-columns: 1fr;
+        text-align: left
+      }
+
+      .p-node {
+        display: none
+      }
+
+      .p-content.right {
+        text-align: left
+      }
+
+      .ai-sol-layout {
+        grid-template-columns: 1fr
+      }
+
+      .port-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .testi-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .price-grid {
+        grid-template-columns: 1fr
+      }
+
+      .p-card.feat {
+        order: -1
+      }
+
+      .faq-layout {
+        grid-template-columns: 1fr
+      }
+
+      .faq-left {
+        position: static
+      }
+
+      .contact-layout {
+        grid-template-columns: 1fr
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .stats-row {
+        gap: 0
+      }
+
+      .stat-col {
+        padding: 24px 32px
+      }
+    }
+
+    @media(max-width:640px) {
+      .wrap {
+        padding: 0 20px
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr
+      }
+
+      .port-grid {
+        grid-template-columns: 1fr
+      }
+
+      .testi-grid {
+        grid-template-columns: 1fr
+      }
+
+      .blog-grid {
+        grid-template-columns: 1fr
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr
+      }
+
+      .form-row-2 {
+        grid-template-columns: 1fr
+      }
+
+      .stats-row {
+        flex-direction: column
+      }
+
+      .stat-col+.stat-col::before {
+        display: none
+      }
+
+      .stat-col {
+        border-top: 1px solid var(--line)
+      }
+
+      .hero-float-1,
+      .hero-float-2 {
+        display: none
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="canvas"></canvas>
+
+  <!-- ═══ NAV ═══ -->
+  <nav id="nav">
+    <div class="wrap">
+      <div class="nav-wrap">
+
+        <!-- COMPANY LOGO IMAGE -->
+        <a href="#" class="nav-logo" aria-label="TagMePK Home">
+          <img src="1000708909.png" alt="TagMePK logo" />
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="#services">Services</a></li>
+          <li><a href="#solutions">AI Solutions</a></li>
+          <li><a href="#portfolio">Work</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <a href="#contact" class="nav-btn"><i class="ti ti-calendar-event"></i> Book Consultation</a>
+        <button class="hamburger" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mob-menu" id="mob">
+    <button class="mob-close" id="mobClose">✕</button>
+    <a href="#services" onclick="closeMob()">Services</a>
+    <a href="#solutions" onclick="closeMob()">AI Solutions</a>
+    <a href="#portfolio" onclick="closeMob()">Work</a>
+    <a href="#pricing" onclick="closeMob()">Pricing</a>
+    <a href="#contact" onclick="closeMob()">Contact</a>
+    <a href="#contact" onclick="closeMob()" class="btn-g" style="margin-top:8px"><i
+        class="ti ti-calendar-event"></i>Book Consultation</a>
+  </div>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero" id="home">
+    <div class="hero-aura">
+      <div class="hero-grid"></div>
+      <div class="aura aura-1"></div>
+      <div class="aura aura-2"></div>
+      <div class="aura aura-3"></div>
+    </div>
+    <div class="wrap">
+      <div class="hero-inner">
+        <div class="hero-left rv-l">
+          <div class="hero-pill"><span class="hero-pill-dot"></span>Pakistan's #1 AI Marketing Agency</div>
+          <h1 class="sora">Empowering Businesses with <span class="h1-green">AI-Powered</span> <span
+              class="h1-blue">Marketing</span> & Automation</h1>
+          <p class="hero-sub">TagMePK helps businesses grow faster through artificial intelligence, digital marketing,
+            automation, and high-converting online experiences built for measurable results.</p>
+          <div class="hero-actions">
+            <a href="#contact" class="btn-g"><i class="ti ti-calendar-event"></i>Book Free Consultation</a>
+            <a href="#services" class="btn-outline"><i class="ti ti-arrow-right"></i>Explore Services</a>
+          </div>
+          <div class="hero-stats-row">
+            <div class="hs-item"><strong>150+</strong><span>Successful Projects</span></div>
+            <div class="hs-item"><strong>100+</strong><span>Happy Clients</span></div>
+            <div class="hs-item"><strong>95%</strong><span>Satisfaction Rate</span></div>
+            <div class="hs-item"><strong>24/7</strong><span>Support</span></div>
+          </div>
+        </div>
+        <div class="hero-right rv-r" style="transition-delay:.15s">
+          <div class="hero-float-1"><i class="ti ti-trending-up" style="color:var(--green)"></i>Revenue up 340% this
+            quarter</div>
+          <div class="hero-card-main">
+            <div class="hc-label"><i class="ti ti-activity"
+                style="margin-right:6px;font-size:14px;vertical-align:-2px;color:var(--green)"></i>Live AI Performance
+              Dashboard</div>
+            <div class="hc-metrics">
+              <div class="hc-row">
+                <span class="hc-name"><i class="ti ti-speakerphone"></i>Ad ROI</span>
+                <div class="hc-bar-wrap">
+                  <div class="hc-bar" style="width:88%;animation-delay:.2s"></div>
+                </div>
+                <span class="hc-pct">8.8×</span>
+              </div>
+              <div class="hc-row">
+                <span class="hc-name"><i class="ti ti-users"></i>Lead Quality</span>
+                <div class="hc-bar-wrap">
+                  <div class="hc-bar" style="width:91%;animation-delay:.35s"></div>
+                </div>
+                <span class="hc-pct">91%</span>
+              </div>
+              <div class="hc-row">
+                <span class="hc-name"><i class="ti ti-robot"></i>Automation</span>
+                <div class="hc-bar-wrap">
+                  <div class="hc-bar" style="width:96%;animation-delay:.5s"></div>
+                </div>
+                <span class="hc-pct">96%</span>
+              </div>
+              <div class="hc-row">
+                <span class="hc-name"><i class="ti ti-chart-line"></i>SEO Growth</span>
+                <div class="hc-bar-wrap">
+                  <div class="hc-bar" style="width:74%;animation-delay:.65s"></div>
+                </div>
+                <span class="hc-pct">+74%</span>
+              </div>
+            </div>
+            <div class="hc-divider"></div>
+            <div class="hc-bottom">
+              <div class="hc-stat"><strong>$2.4M</strong><span>Revenue Generated</span></div>
+              <div class="hc-stat"><strong>12×</strong><span>Avg. ROAS</span></div>
+              <div class="hc-stat"><strong>4.9★</strong><span>Client Rating</span></div>
+            </div>
+          </div>
+          <div class="hero-float-2"><i class="ti ti-robot" style="color:#6eb7ff"></i>AI Chatbot handled 2,400 queries
+            today</div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- ═══ TRUSTED ═══ -->
+  <div class="trusted">
+    <div class="wrap">
+      <p class="trusted-label">Trusted by growing businesses across Pakistan & globally</p>
+      <div class="logo-scroll">
+        <div class="logo-pill"><i class="ti ti-building-hospital"></i>HealthFirst Clinic</div>
+        <div class="logo-pill"><i class="ti ti-home"></i>LuxRealty Group</div>
+        <div class="logo-pill"><i class="ti ti-school"></i>EduSpark Academy</div>
+        <div class="logo-pill"><i class="ti ti-tools-kitchen-2"></i>Spice Garden</div>
+        <div class="logo-pill"><i class="ti ti-shopping-cart"></i>ModStyle Commerce</div>
+        <div class="logo-pill"><i class="ti ti-building"></i>BuildRight Corp.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ WHY TAGMEPK ═══ -->
+  <section class="why" id="why">
+    <div class="wrap">
+      <div class="why-layout">
+        <div class="why-left rv-l">
+          <span class="eyebrow">Why TagMePK</span>
+          <h2 class="sec-title sora">Every advantage <span style="color:var(--green)">your growth</span> demands</h2>
+          <p class="sec-sub" style="margin-bottom:32px">We fuse artificial intelligence with creative strategy —
+            delivering results that traditional agencies simply can't match at this speed or scale.</p>
+          <a href="#contact" class="btn-g" style="display:inline-flex"><i class="ti ti-arrow-right"></i>Start Growing
+            Today</a>
+        </div>
+        <div class="why-right rv-r">
+          <div class="why-item">
+            <div class="why-icon wi-blue"><i class="ti ti-brain"></i></div>
+            <div>
+              <h3>AI-Driven Strategies</h3>
+              <p>Every campaign is powered by machine learning and real-time data to maximize ROI and eliminate wasted
+                spend before it happens.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-icon wi-green"><i class="ti ti-bolt"></i></div>
+            <div>
+              <h3>Business Automation</h3>
+              <p>We automate the workflows that eat your team's time — so every person on your payroll works on what
+                actually moves revenue.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-icon wi-orange"><i class="ti ti-palette"></i></div>
+            <div>
+              <h3>Creative That Converts</h3>
+              <p>Scroll-stopping content, ads, and brand experiences engineered to turn attention into action — not just
+                impressions.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-icon wi-blue"><i class="ti ti-device-desktop-analytics"></i></div>
+            <div>
+              <h3>High-Converting Websites</h3>
+              <p>Purpose-built sites and landing pages engineered to turn visitors into leads — fast-loading,
+                mobile-first, SEO-ready.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-icon wi-green"><i class="ti ti-chart-dots-3"></i></div>
+            <div>
+              <h3>Data-Driven Decisions</h3>
+              <p>Every move is backed by live analytics, A/B testing, and performance benchmarks. We cut what doesn't
+                work fast.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-icon wi-orange"><i class="ti ti-headset"></i></div>
+            <div>
+              <h3>Dedicated 24/7 Support</h3>
+              <p>A real team accountable to your goals — not a ticket queue. We're reachable around the clock for
+                anything that matters.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SERVICES ═══ -->
+  <section class="services" id="services">
+    <div class="wrap">
+      <div class="services-intro rv">
+        <div>
+          <span class="eyebrow">Services</span>
+          <h2 class="sec-title sora">Premium services for <span style="color:var(--green)">modern business</span></h2>
+        </div>
+        <p class="sec-sub" style="max-width:360px">Every service is designed from the ground up to drive compounding,
+          measurable growth.</p>
+      </div>
+      <div class="services-grid">
+        <div class="svc-card rv">
+          <div class="svc-arrow"><i class="ti ti-arrow-up-right"></i></div>
+          <div class="svc-num">01 <span
+              style="flex:1;height:1px;background:var(--line);display:inline-block;vertical-align:middle"></span></div>
+          <div class="svc-icon-wrap" style="background:rgba(26,110,255,.12);color:var(--blue)"><i
+              class="ti ti-writing"></i></div>
+          <h3>AI Content Creation</h3>
+          <p>Professional AI-generated content that speaks to your audience and drives engagement across every channel,
+            at scale.</p>
+          <div class="svc-tags"><span class="s-tag">Social Media</span><span class="s-tag">Ad Copy</span><span
+              class="s-tag">Email</span><span class="s-tag">SEO</span><span class="s-tag">Blog</span></div>
+        </div>
+        <div class="svc-card rv">
+          <div class="svc-arrow"><i class="ti ti-arrow-up-right"></i></div>
+          <div class="svc-num">02</div>
+          <div class="svc-icon-wrap" style="background:rgba(45,198,83,.12);color:var(--green)"><i
+              class="ti ti-social"></i></div>
+          <h3>Social Media Management</h3>
+          <p>End-to-end social management — strategy, content, scheduling, community, analytics, and monthly growth
+            reports.</p>
+          <div class="svc-tags"><span class="s-tag">Facebook</span><span class="s-tag">Instagram</span><span
+              class="s-tag">TikTok</span><span class="s-tag">LinkedIn</span><span class="s-tag">YouTube</span></div>
+        </div>
+        <div class="svc-card rv">
+          <div class="svc-arrow"><i class="ti ti-arrow-up-right"></i></div>
+          <div class="svc-num">03</div>
+          <div class="svc-icon-wrap" style="background:rgba(249,115,22,.12);color:var(--orange)"><i
+              class="ti ti-ad"></i></div>
+          <h3>Creative Ad Design</h3>
+          <p>High-converting paid ads built to capture attention and drive action — across Facebook, Instagram, TikTok,
+            and Google.</p>
+          <div class="svc-tags"><span class="s-tag">Facebook Ads</span><span class="s-tag">Google Ads</span><span
+              class="s-tag">TikTok Ads</span><span class="s-tag">Lead Gen</span></div>
+        </div>
+        <div class="svc-card rv">
+          <div class="svc-arrow"><i class="ti ti-arrow-up-right"></i></div>
+          <div class="svc-num">04</div>
+          <div class="svc-icon-wrap" style="background:rgba(26,110,255,.12);color:var(--blue)"><i
+              class="ti ti-code"></i></div>
+          <h3>Website Development</h3>
+          <p>Responsive, fast, SEO-optimized websites built with conversion at the center of every design decision.</p>
+          <div class="svc-tags"><span class="s-tag">Business Sites</span><span class="s-tag">Landing Pages</span><span
+              class="s-tag">UI/UX</span><span class="s-tag">SEO</span></div>
+        </div>
+        <div class="svc-card rv">
+          <div class="svc-arrow"><i class="ti ti-arrow-up-right"></i></div>
+          <div class="svc-num">05</div>
+          <div class="svc-icon-wrap" style="background:rgba(45,198,83,.12);color:var(--green)"><i
+              class="ti ti-robot"></i></div>
+          <h3>AI Automation</h3>
+          <p>Intelligent chatbots, CRM integrations, and workflow automation that eliminate bottlenecks and operate
+            24/7.</p>
+          <div class="svc-tags"><span class="s-tag">WhatsApp Bot</span><span class="s-tag">CRM</span><span
+              class="s-tag">Sales Funnels</span><span class="s-tag">Lead Qual.</span></div>
+        </div>
+        <div class="svc-card rv">
+          <div class="svc-arrow"><i class="ti ti-arrow-up-right"></i></div>
+          <div class="svc-num">06</div>
+          <div class="svc-icon-wrap" style="background:rgba(249,115,22,.12);color:var(--orange)"><i
+              class="ti ti-map-pin"></i></div>
+          <h3>Google Maps & Local SEO</h3>
+          <p>Get found by local customers — Google Business optimization, review management, and local search dominance.
+          </p>
+          <div class="svc-tags"><span class="s-tag">GMB Setup</span><span class="s-tag">Local SEO</span><span
+              class="s-tag">Reviews</span><span class="s-tag">Maps</span></div>
+        </div>
+        <div class="svc-card rv" style="grid-column:span 3">
+          <div class="svc-arrow"><i class="ti ti-arrow-up-right"></i></div>
+          <div class="svc-num">07</div>
+          <div class="svc-icon-wrap" style="background:rgba(26,110,255,.12);color:var(--blue)"><i
+              class="ti ti-building-store"></i></div>
+          <h3>Business Profile Setup</h3>
+          <p>Complete professional setup across Google, Facebook, Instagram, LinkedIn, TikTok, and YouTube — with
+            cohesive branding throughout.</p>
+          <div class="svc-tags"><span class="s-tag">Google</span><span class="s-tag">Facebook</span><span
+              class="s-tag">LinkedIn</span><span class="s-tag">TikTok</span><span class="s-tag">YouTube</span><span
+              class="s-tag">Full Branding</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ INDUSTRIES ═══ -->
+  <section class="industries" id="industries">
+    <div class="wrap">
+      <div class="industries-inner">
+        <div class="rv-l">
+          <span class="eyebrow">Industries</span>
+          <h2 class="sec-title sora">Built for <span style="color:var(--green)">every sector</span></h2>
+          <p class="sec-sub">AI marketing solutions tailored to the unique customer journeys of your industry.</p>
+        </div>
+        <div class="ind-chips rv-r">
+          <div class="ind-chip"><i class="ti ti-stethoscope"></i>Healthcare</div>
+          <div class="ind-chip"><i class="ti ti-home"></i>Real Estate</div>
+          <div class="ind-chip"><i class="ti ti-school"></i>Education</div>
+          <div class="ind-chip"><i class="ti ti-tools-kitchen-2"></i>Restaurants</div>
+          <div class="ind-chip"><i class="ti ti-shopping-bag"></i>Retail</div>
+          <div class="ind-chip"><i class="ti ti-crane"></i>Construction</div>
+          <div class="ind-chip"><i class="ti ti-car"></i>Automotive</div>
+          <div class="ind-chip"><i class="ti ti-gavel"></i>Legal</div>
+          <div class="ind-chip"><i class="ti ti-sparkles"></i>Beauty</div>
+          <div class="ind-chip"><i class="ti ti-coin"></i>Finance</div>
+          <div class="ind-chip"><i class="ti ti-plane"></i>Travel</div>
+          <div class="ind-chip"><i class="ti ti-cpu"></i>Technology</div>
+          <div class="ind-chip"><i class="ti ti-package"></i>E-Commerce</div>
+          <div class="ind-chip"><i class="ti ti-building-factory"></i>Manufacturing</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PROCESS ═══ -->
+  <section class="process" id="process">
+    <div class="wrap">
+      <div class="process-header rv">
+        <span class="eyebrow" style="justify-content:center">Our Process</span>
+        <h2 class="sec-title sora">From discovery to <span style="color:var(--green)">measurable growth</span></h2>
+        <p class="sec-sub">A structured eight-step process that turns your business goals into real, compounding
+          results.</p>
+      </div>
+      <div class="process-spine">
+        <div class="p-row rv">
+          <div class="p-content right">
+            <div class="p-label">Discovery</div>
+            <div class="p-desc">Understand your business, goals, competitors, and current digital presence.</div>
+          </div>
+          <div class="p-node active">01</div>
+          <div></div>
+        </div>
+        <div class="p-row rv">
+          <div></div>
+          <div class="p-node">02</div>
+          <div class="p-content">
+            <div class="p-label">Consultation</div>
+            <div class="p-desc">Deep-dive session to align on scope, priorities, budget, and success metrics.</div>
+          </div>
+        </div>
+        <div class="p-row rv">
+          <div class="p-content right">
+            <div class="p-label">Strategy</div>
+            <div class="p-desc">Custom AI-powered roadmap built specifically around your goals and market.</div>
+          </div>
+          <div class="p-node">03</div>
+          <div></div>
+        </div>
+        <div class="p-row rv">
+          <div></div>
+          <div class="p-node">04</div>
+          <div class="p-content">
+            <div class="p-label">Design</div>
+            <div class="p-desc">Visual and UX design crafted for conversion, brand impact, and user delight.</div>
+          </div>
+        </div>
+        <div class="p-row rv">
+          <div class="p-content right">
+            <div class="p-label">Development</div>
+            <div class="p-desc">Build, integrate, and configure all systems, automations, and campaigns.</div>
+          </div>
+          <div class="p-node">05</div>
+          <div></div>
+        </div>
+        <div class="p-row rv">
+          <div></div>
+          <div class="p-node">06</div>
+          <div class="p-content">
+            <div class="p-label">Testing & QA</div>
+            <div class="p-desc">Rigorous testing across devices, platforms, browsers, and real user scenarios.</div>
+          </div>
+        </div>
+        <div class="p-row rv">
+          <div class="p-content right">
+            <div class="p-label">Launch</div>
+            <div class="p-desc">Coordinated go-live with real-time monitoring and rapid-response coverage.</div>
+          </div>
+          <div class="p-node">07</div>
+          <div></div>
+        </div>
+        <div class="p-row rv">
+          <div></div>
+          <div class="p-node">08</div>
+          <div class="p-content">
+            <div class="p-label">Growth & Support</div>
+            <div class="p-desc">Ongoing optimization, monthly reporting, and continuous scaling support.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ AI SOLUTIONS ═══ -->
+  <section class="ai-sol" id="solutions">
+    <div class="wrap">
+      <div class="ai-sol-layout">
+        <div class="rv-l">
+          <span class="eyebrow">AI Solutions</span>
+          <h2 class="sec-title sora">How AI transforms <span style="color:var(--green)">your operations</span></h2>
+          <p class="sec-sub" style="margin-bottom:36px">Purpose-built AI systems that eliminate inefficiency, engage
+            customers automatically, and compound your growth month over month.</p>
+          <div class="ai-visual">
+            <div class="ai-visual-label"><i class="ti ti-brain" style="color:var(--green);font-size:14px"></i>AI Engine
+              — Live Status</div>
+            <div class="ai-metric-row">
+              <div class="ami-icon" style="background:rgba(45,198,83,.12);color:var(--green)"><i
+                  class="ti ti-message-chatbot"></i></div>
+              <div class="ami-info">
+                <div class="ami-name">WhatsApp AI Chatbot</div>
+                <div class="ami-sub">2,400 queries handled today</div>
+              </div>
+              <span class="ami-badge badge-live">LIVE</span>
+            </div>
+            <div class="ai-metric-row">
+              <div class="ami-icon" style="background:rgba(26,110,255,.12);color:var(--blue)"><i
+                  class="ti ti-mail-forward"></i></div>
+              <div class="ami-info">
+                <div class="ami-name">Email Automation</div>
+                <div class="ami-sub">34% open rate this week</div>
+              </div>
+              <span class="ami-val">+18%</span>
+            </div>
+            <div class="ai-metric-row">
+              <div class="ami-icon" style="background:rgba(249,115,22,.12);color:var(--orange)"><i
+                  class="ti ti-target-arrow"></i></div>
+              <div class="ami-info">
+                <div class="ami-name">Lead Qualification AI</div>
+                <div class="ami-sub">89 hot leads identified</div>
+              </div>
+              <span class="ami-badge badge-up">↑ 42%</span>
+            </div>
+            <div class="ai-metric-row">
+              <div class="ami-icon" style="background:rgba(45,198,83,.12);color:var(--green)"><i
+                  class="ti ti-chart-line"></i></div>
+              <div class="ami-info">
+                <div class="ami-name">Predictive Analytics</div>
+                <div class="ami-sub">Next 30-day forecast ready</div>
+              </div>
+              <span class="ami-val">+$24k</span>
+            </div>
+          </div>
+        </div>
+        <div class="ai-sol-right rv-r">
+          <div class="sol-card">
+            <div class="sol-icon" style="background:rgba(26,110,255,.12);color:var(--blue)"><i
+                class="ti ti-speakerphone"></i></div>
+            <div>
+              <h4>Marketing Automation</h4>
+              <p>Automated campaigns that reach the right customer at the right time — zero manual effort.</p>
+            </div>
+          </div>
+          <div class="sol-card">
+            <div class="sol-icon" style="background:rgba(45,198,83,.12);color:var(--green)"><i
+                class="ti ti-message-chatbot"></i></div>
+            <div>
+              <h4>AI Customer Support</h4>
+              <p>24/7 intelligent chatbots that resolve queries, qualify leads, and book appointments automatically.</p>
+            </div>
+          </div>
+          <div class="sol-card">
+            <div class="sol-icon" style="background:rgba(249,115,22,.12);color:var(--orange)"><i
+                class="ti ti-funnel"></i></div>
+            <div>
+              <h4>Lead Generation</h4>
+              <p>AI-powered funnels that identify, attract, and convert high-intent prospects automatically.</p>
+            </div>
+          </div>
+          <div class="sol-card">
+            <div class="sol-icon" style="background:rgba(26,110,255,.12);color:var(--blue)"><i
+                class="ti ti-report-analytics"></i></div>
+            <div>
+              <h4>Business Intelligence</h4>
+              <p>Real-time dashboards that surface actionable insights from your data before problems arise.</p>
+            </div>
+          </div>
+          <div class="sol-card">
+            <div class="sol-icon" style="background:rgba(45,198,83,.12);color:var(--green)"><i
+                class="ti ti-settings-automation"></i></div>
+            <div>
+              <h4>Workflow Automation</h4>
+              <p>Eliminate manual bottlenecks across sales, operations, and support with intelligent systems.</p>
+            </div>
+          </div>
+          <div class="sol-card">
+            <div class="sol-icon" style="background:rgba(249,115,22,.12);color:var(--orange)"><i
+                class="ti ti-chart-dots"></i></div>
+            <div>
+              <h4>Predictive Analytics</h4>
+              <p>Forecast customer behavior, churn risk, and campaign outcomes before they happen.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ STATS ═══ -->
+  <div class="stats-band">
+    <div class="wrap">
+      <div class="stats-row">
+        <div class="stat-col rv"><span class="stat-num" data-target="150">0</span>
+          <div class="stat-lbl">Successful Projects</div>
+        </div>
+        <div class="stat-col rv" style="transition-delay:.1s"><span class="stat-num" data-target="100">0</span>
+          <div class="stat-lbl">Happy Clients</div>
+        </div>
+        <div class="stat-col rv" style="transition-delay:.2s"><span class="stat-num" data-target="95">0</span>
+          <div class="stat-lbl">Client Satisfaction %</div>
+        </div>
+        <div class="stat-col rv" style="transition-delay:.3s"><span class="stat-num">24/7</span>
+          <div class="stat-lbl">Support Available</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PORTFOLIO ═══ -->
+  <section class="portfolio" id="portfolio">
+    <div class="wrap">
+      <div class="port-header rv">
+        <div>
+          <span class="eyebrow">Portfolio</span>
+          <h2 class="sec-title sora">Work that <span style="color:var(--green)">speaks for itself</span></h2>
+        </div>
+        <a href="#contact" class="btn-outline"><i class="ti ti-arrow-right"></i>View All Projects</a>
+      </div>
+      <div class="port-grid">
+        <div class="port-card rv">
+          <div class="port-thumb" style="background:linear-gradient(135deg,rgba(26,110,255,.15),rgba(45,198,83,.1))"><i
+              class="ti ti-stethoscope"></i>
+            <div class="port-overlay"><i class="ti ti-eye" style="font-size:32px;color:var(--green)"></i></div>
+          </div>
+          <div class="port-info">
+            <div class="port-cat">Healthcare</div>
+            <h3>HealthFirst Clinic</h3>
+            <p>Full digital transformation — website, AI chatbot, and Google Maps domination.</p>
+          </div>
+        </div>
+        <div class="port-card rv">
+          <div class="port-thumb" style="background:linear-gradient(135deg,rgba(249,115,22,.12),rgba(26,110,255,.1))"><i
+              class="ti ti-home"></i>
+            <div class="port-overlay"><i class="ti ti-eye" style="font-size:32px;color:var(--green)"></i></div>
+          </div>
+          <div class="port-info">
+            <div class="port-cat">Real Estate</div>
+            <h3>LuxRealty Group</h3>
+            <p>AI-powered lead generation that tripled qualified inquiries in 60 days.</p>
+          </div>
+        </div>
+        <div class="port-card rv">
+          <div class="port-thumb" style="background:linear-gradient(135deg,rgba(45,198,83,.12),rgba(249,115,22,.1))"><i
+              class="ti ti-tools-kitchen-2"></i>
+            <div class="port-overlay"><i class="ti ti-eye" style="font-size:32px;color:var(--green)"></i></div>
+          </div>
+          <div class="port-info">
+            <div class="port-cat">Restaurant</div>
+            <h3>Spice Garden</h3>
+            <p>Social media management, ad campaigns, and WhatsApp ordering automation.</p>
+          </div>
+        </div>
+        <div class="port-card rv">
+          <div class="port-thumb" style="background:linear-gradient(135deg,rgba(26,110,255,.1),rgba(249,115,22,.12))"><i
+              class="ti ti-school"></i>
+            <div class="port-overlay"><i class="ti ti-eye" style="font-size:32px;color:var(--green)"></i></div>
+          </div>
+          <div class="port-info">
+            <div class="port-cat">Education</div>
+            <h3>EduSpark Academy</h3>
+            <p>Student acquisition funnel and automated enrollment system built on AI.</p>
+          </div>
+        </div>
+        <div class="port-card rv">
+          <div class="port-thumb" style="background:linear-gradient(135deg,rgba(45,198,83,.1),rgba(26,110,255,.15))"><i
+              class="ti ti-shopping-bag"></i>
+            <div class="port-overlay"><i class="ti ti-eye" style="font-size:32px;color:var(--green)"></i></div>
+          </div>
+          <div class="port-info">
+            <div class="port-cat">E-Commerce</div>
+            <h3>ModStyle Commerce</h3>
+            <p>Full-stack e-commerce marketing — paid ads, email automation, and product SEO.</p>
+          </div>
+        </div>
+        <div class="port-card rv">
+          <div class="port-thumb" style="background:linear-gradient(135deg,rgba(249,115,22,.1),rgba(45,198,83,.12))"><i
+              class="ti ti-crane"></i>
+            <div class="port-overlay"><i class="ti ti-eye" style="font-size:32px;color:var(--green)"></i></div>
+          </div>
+          <div class="port-info">
+            <div class="port-cat">Construction</div>
+            <h3>BuildRight Contractors</h3>
+            <p>Local SEO dominance and AI chatbot for instant lead qualification.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TESTIMONIALS ═══ -->
+  <section class="testimonials" id="testimonials">
+    <div class="wrap">
+      <div class="rv" style="text-align:center">
+        <span class="eyebrow" style="justify-content:center">Testimonials</span>
+        <h2 class="sec-title sora">Real results, <span style="color:var(--green)">real businesses</span></h2>
+      </div>
+      <div class="testi-grid">
+        <div class="t-card rv">
+          <div class="t-quote">"</div>
+          <div class="t-stars">★★★★★</div>
+          <p class="t-text">TagMePK transformed our online presence completely. Our leads tripled in just 60 days. The
+            AI chatbot alone saves us 4 hours a day in customer support.</p>
+          <div class="t-author">
+            <div class="t-avatar">AK</div>
+            <div>
+              <div class="t-name">Ahmed Khan</div>
+              <div class="t-role">Founder, HealthFirst Clinic</div>
+            </div>
+          </div>
+        </div>
+        <div class="t-card rv" style="transition-delay:.1s">
+          <div class="t-quote">"</div>
+          <div class="t-stars">★★★★★</div>
+          <p class="t-text">The team understood our real estate market immediately. Our Google ranking jumped from page
+            4 to position 2 within 90 days. Outstanding strategy.</p>
+          <div class="t-author">
+            <div class="t-avatar">SR</div>
+            <div>
+              <div class="t-name">Sarah Rahman</div>
+              <div class="t-role">Director, LuxRealty Group</div>
+            </div>
+          </div>
+        </div>
+        <div class="t-card rv" style="transition-delay:.2s">
+          <div class="t-quote">"</div>
+          <div class="t-stars">★★★★★</div>
+          <p class="t-text">We'd tried three agencies before TagMePK. The difference is night and day — actual
+            data-driven strategy, not vanity metrics. We're finally growing.</p>
+          <div class="t-author">
+            <div class="t-avatar">MH</div>
+            <div>
+              <div class="t-name">Maria Hussain</div>
+              <div class="t-role">CEO, ModStyle Retail</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PRICING ═══ -->
+  <section class="pricing" id="pricing">
+    <div class="wrap">
+      <div class="price-header rv">
+        <span class="eyebrow" style="justify-content:center">Pricing</span>
+        <h2 class="sec-title sora">Transparent plans, <span style="color:var(--green)">real value</span></h2>
+        <p class="sec-sub">No lock-ins. No hidden fees. Choose the plan that fits where your business is right now.</p>
+      </div>
+      <div class="price-grid">
+        <div class="p-card rv">
+          <div class="p-tier">Starter</div>
+          <div class="p-price">5,000 RS<span class="p-mo">/mo</span></div>
+          <p class="p-desc">For small businesses getting started with AI-powered marketing.</p>
+          <ul class="p-features">
+            <li><i class="ti ti-check"></i>AI content creation (8 posts/month)</li>
+            <li><i class="ti ti-check"></i>Social media management (2 platforms)</li>
+            <li><i class="ti ti-check"></i>Google Business Profile setup</li>
+            <li><i class="ti ti-check"></i>Basic monthly analytics report</li>
+            <li><i class="ti ti-check"></i>Email support within 24 hours</li>
+            <li><i class="ti ti-check"></i>1 landing page design</li>
+          </ul>
+          <a href="#contact" class="p-cta p-cta-ghost">Get Started</a>
+        </div>
+        <div class="p-card feat rv" style="transition-delay:.1s">
+          <div class="p-badge">MOST POPULAR</div>
+          <div class="p-tier">Growth</div>
+          <div class="p-price">12,000 RS<span class="p-mo">/mo</span></div>
+          <p class="p-desc">For businesses ready to scale with full AI marketing and automation.</p>
+          <ul class="p-features">
+            <li><i class="ti ti-check"></i>AI content creation (24 posts/month)</li>
+            <li><i class="ti ti-check"></i>Social media (5 platforms)</li>
+            <li><i class="ti ti-check"></i>Paid ads management (up to $3k budget)</li>
+            <li><i class="ti ti-check"></i>AI chatbot setup (WhatsApp & Web)</li>
+            <li><i class="ti ti-check"></i>SEO optimization + local SEO</li>
+            <li><i class="ti ti-check"></i>Weekly performance reports</li>
+            <li><i class="ti ti-check"></i>Priority support within 4 hours</li>
+            <li><i class="ti ti-check"></i>2 custom page designs</li>
+          </ul>
+          <a href="#contact" class="p-cta p-cta-solid">Start Growing</a>
+        </div>
+        <div class="p-card rv" style="transition-delay:.2s">
+          <div class="p-tier">Enterprise</div>
+          <div class="p-price" style="font-size:36px;letter-spacing:-.02em">Custom</div>
+          <p class="p-desc">Full-service AI transformation for established businesses and corporations.</p>
+          <ul class="p-features">
+            <li><i class="ti ti-check"></i>Everything in Growth</li>
+            <li><i class="ti ti-check"></i>Dedicated account manager</li>
+            <li><i class="ti ti-check"></i>Advanced AI automation & CRM</li>
+            <li><i class="ti ti-check"></i>Multi-channel ad campaigns</li>
+            <li><i class="ti ti-check"></i>Custom analytics dashboard</li>
+            <li><i class="ti ti-check"></i>Sales funnel architecture</li>
+            <li><i class="ti ti-check"></i>24/7 dedicated support line</li>
+            <li><i class="ti ti-check"></i>Quarterly strategy reviews</li>
+          </ul>
+          <a href="#contact" class="p-cta p-cta-ghost">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FAQ ═══ -->
+  <section class="faq" id="faq">
+    <div class="wrap">
+      <div class="faq-layout">
+        <div class="faq-left rv-l">
+          <span class="eyebrow">FAQ</span>
+          <h2 class="sec-title sora">Common <span style="color:var(--green)">questions</span></h2>
+          <p class="sec-sub" style="margin-bottom:32px">Everything you need to know before getting started with TagMePK.
+          </p>
+          <a href="#contact" class="btn-g" style="display:inline-flex"><i class="ti ti-message-circle"></i>Ask Us
+            Directly</a>
+        </div>
+        <div class="faq-list rv-r">
+          <div class="faq-item">
+            <button class="faq-btn" onclick="toggleFaq(this)">What makes TagMePK different from other agencies?<i
+                class="ti ti-plus"></i></button>
+            <div class="faq-body">
+              <div class="faq-body-inner">We integrate AI at every layer — not as a buzzword, but as the actual engine
+                behind content, automation, analytics, and outreach. This lets us deliver results faster and at a scale
+                traditional agencies simply can't match.</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-btn" onclick="toggleFaq(this)">How long does it take to see results?<i
+                class="ti ti-plus"></i></button>
+            <div class="faq-body">
+              <div class="faq-body-inner">Most clients see measurable improvements within the first 30 days — especially
+                in social engagement and local visibility. Paid ads typically show returns within 2 weeks. SEO results
+                compound over 60–90 days.</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-btn" onclick="toggleFaq(this)">Do I need technical knowledge to work with you?<i
+                class="ti ti-plus"></i></button>
+            <div class="faq-body">
+              <div class="faq-body-inner">None at all. We handle everything end-to-end — strategy, setup, execution, and
+                reporting. You'll receive clear, jargon-free updates on exactly what's working and why.</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-btn" onclick="toggleFaq(this)">Can I cancel or change my plan anytime?<i
+                class="ti ti-plus"></i></button>
+            <div class="faq-body">
+              <div class="faq-body-inner">Yes. All plans are month-to-month with no long-term lock-ins. You can upgrade,
+                downgrade, or pause at any time with 30 days' notice. We earn your business every single month.</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-btn" onclick="toggleFaq(this)">How does the AI chatbot work?<i
+                class="ti ti-plus"></i></button>
+            <div class="faq-body">
+              <div class="faq-body-inner">We train a custom AI assistant on your business — services, FAQs, pricing, and
+                booking flows. It operates 24/7 on WhatsApp, your website, or Messenger, qualifying leads and booking
+                appointments automatically.</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-btn" onclick="toggleFaq(this)">Do you run paid advertising campaigns?<i
+                class="ti ti-plus"></i></button>
+            <div class="faq-body">
+              <div class="faq-body-inner">Yes — we manage Facebook, Instagram, TikTok, and Google Ads. We handle
+                creative, targeting, A/B testing, budget pacing, and optimization. Ad spend goes directly to the
+                platforms; our fee covers management only.</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-btn" onclick="toggleFaq(this)">What industries do you specialize in?<i
+                class="ti ti-plus"></i></button>
+            <div class="faq-body">
+              <div class="faq-body-inner">Healthcare, real estate, education, hospitality, e-commerce, legal, finance,
+                construction, beauty, and more. Our AI systems are adapted to the specific customer journeys of each
+                sector.</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-btn" onclick="toggleFaq(this)">How do you report on performance?<i
+                class="ti ti-plus"></i></button>
+            <div class="faq-body">
+              <div class="faq-body-inner">Monthly reports (weekly on Growth and Enterprise) covering reach, engagement,
+                leads, conversions, ROI, and trend analysis — plus access to a live analytics dashboard on Growth and
+                Enterprise plans.</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-btn" onclick="toggleFaq(this)">How do I get started?<i class="ti ti-plus"></i></button>
+            <div class="faq-body">
+              <div class="faq-body-inner">Book a free 30-minute consultation using the button below. We'll discuss your
+                goals, audit your current digital presence, and recommend the right plan. No obligation, no sales
+                pressure.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ BLOG ═══ -->
+  <section class="blog" id="blog">
+    <div class="wrap">
+      <div class="blog-header rv">
+        <div>
+          <span class="eyebrow">Blog</span>
+          <h2 class="sec-title sora">AI & Marketing <span style="color:var(--green)">insights</span></h2>
+        </div>
+        <a href="#" class="btn-outline"><i class="ti ti-arrow-right"></i>All Articles</a>
+      </div>
+      <div class="blog-grid">
+        <div class="b-card rv">
+          <div class="b-thumb" style="background:linear-gradient(135deg,rgba(26,110,255,.12),rgba(45,198,83,.08))"><i
+              class="ti ti-robot"></i></div>
+          <div class="b-body">
+            <div class="b-cat"><i class="ti ti-tag"></i>AI Marketing</div>
+            <h3>How AI Chatbots Are Replacing Traditional Customer Support in 2026</h3>
+            <p>The shift from human-only support to intelligent automation — and why businesses that don't adapt will
+              fall behind.</p>
+            <div class="b-meta"><i class="ti ti-calendar"></i>June 12, 2026<span style="margin-left:8px"><i
+                  class="ti ti-clock"></i>6 min read</span></div>
+          </div>
+        </div>
+        <div class="b-card rv" style="transition-delay:.1s">
+          <div class="b-thumb" style="background:linear-gradient(135deg,rgba(45,198,83,.1),rgba(26,110,255,.08))"><i
+              class="ti ti-map-pin"></i></div>
+          <div class="b-body">
+            <div class="b-cat"><i class="ti ti-tag"></i>Local SEO</div>
+            <h3>Google Maps Domination: A Step-by-Step Guide for Local Businesses</h3>
+            <p>The exact strategies we use to rank clients in the top 3 Google Maps positions in competitive markets.
+            </p>
+            <div class="b-meta"><i class="ti ti-calendar"></i>June 5, 2026<span style="margin-left:8px"><i
+                  class="ti ti-clock"></i>8 min read</span></div>
+          </div>
+        </div>
+        <div class="b-card rv" style="transition-delay:.2s">
+          <div class="b-thumb" style="background:linear-gradient(135deg,rgba(249,115,22,.1),rgba(45,198,83,.08))"><i
+              class="ti ti-ad"></i></div>
+          <div class="b-body">
+            <div class="b-cat"><i class="ti ti-tag"></i>Paid Ads</div>
+            <h3>Why Your Facebook Ads Aren't Converting (And How to Fix It)</h3>
+            <p>The five most common mistakes we see in ad accounts — and the AI-powered fixes that bring campaigns back
+              to life.</p>
+            <div class="b-meta"><i class="ti ti-calendar"></i>May 28, 2026<span style="margin-left:8px"><i
+                  class="ti ti-clock"></i>5 min read</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FINAL CTA ═══ -->
+  <section class="cta-band">
+    <div class="cta-aura"></div>
+    <div class="wrap">
+      <div class="rv">
+        <span class="eyebrow" style="justify-content:center">Ready to grow?</span>
+        <h2 class="sora">Ready to Transform Your Business <span style="color:var(--green)">with AI?</span></h2>
+        <p>Let's build smarter systems, automate repetitive work, grow your online presence, and scale your business
+          with innovative AI solutions.</p>
+        <div class="cta-actions">
+          <a href="#contact" class="btn-g"><i class="ti ti-calendar-event"></i>Book Free Consultation</a>
+          <a href="#contact" class="btn-outline"><i class="ti ti-message-2"></i>Contact Our Team</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CONTACT ═══ -->
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="rv" style="text-align:center;margin-bottom:56px">
+        <span class="eyebrow" style="justify-content:center">Contact</span>
+        <h2 class="sec-title sora">Let's start a <span style="color:var(--green)">conversation</span></h2>
+        <p class="sec-sub" style="margin:0 auto">We respond to every inquiry within 4 business hours.</p>
+      </div>
+      <div class="contact-layout">
+        <div class="contact-info rv-l">
+          <div class="c-item">
+            <div class="c-icon"><i class="ti ti-mail"></i></div>
+            <div>
+              <div class="c-label">Email</div>
+              <div class="c-val">tagmepk.official@gmail.com</div>
+            </div>
+          </div>
+          <div class="c-item">
+            <div class="c-icon"><i class="ti ti-phone"></i></div>
+            <div>
+              <div class="c-label">Phone</div>
+              <div class="c-val">+923029804500</div>
+            </div>
+          </div>
+          <div class="c-item">
+            <div class="c-icon"><i class="ti ti-map-pin"></i></div>
+            <div>
+              <div class="c-label">Office</div>
+              <div class="c-val">Allama Iqbal Road,Garden town, Okara, 56300 — Serving clients globally</div>
+            </div>
+          </div>
+          <a href="https://wa.me/923029804500" class="wa-cta"><i class="ti ti-brand-whatsapp"></i>Chat on WhatsApp</a>
+          <div class="hours-box">
+            <div class="hours-title"><i class="ti ti-clock"></i>Business Hours</div>
+            <div class="h-row"><span>Monday – Friday</span><span>9 AM – 6 PM <span class="open-badge">Open</span></span>
+            </div>
+            <div class="h-row"><span>Saturday</span><span>10 AM – 2 PM</span></div>
+            <div class="h-row"><span>Sunday</span><span>AI support active</span></div>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:8px">
+            <span style="font-size:13px;color:var(--text-dim)">Follow us:</span>
+            <a href="https://www.instagram.com/tagmepkofficial" target="_blank"
+              style="font-size:13px;color:var(--green);display:flex;align-items:center;gap:5px">
+              <i class="ti ti-brand-instagram" style="font-size:16px"></i>Instagram</a>
+            <a href="https://www.facebook.com/tagmepkofficial" target="_blank"
+              style="font-size:13px;color:var(--green);display:flex;align-items:center;gap:5px">
+              <i class="ti ti-brand-facebook" style="font-size:16px"></i>Facebook</a>
+            <a href="https://www.tiktok.com/@tagmepk" target="_blank"
+              style="font-size:13px;color:var(--green);display:flex;align-items:center;gap:5px">
+              <i class="ti ti-brand-tiktok" style="font-size:16px"></i>TikTok</a>
+          </div>
+        </div>
+        <div class="cf rv-r">
+          <div class="form-row-2">
+            <div class="fg"><label>First Name</label><input type="text" placeholder="Ali"></div>
+            <div class="fg"><label>Last Name</label><input type="text" placeholder="Hassan"></div>
+          </div>
+          <div class="fg"><label>Email Address</label><input type="email" placeholder="ali@company.com"></div>
+          <div class="fg"><label>Phone Number</label><input type="tel" placeholder="+92 300 000 0000"></div>
+          <div class="fg">
+            <label>Service Interested In</label>
+            <select>
+              <option value="">Select a service</option>
+              <option>AI Content Creation</option>
+              <option>Social Media Management</option>
+              <option>Creative Ad Design</option>
+              <option>Website Development</option>
+              <option>AI Automation & Chatbots</option>
+              <option>Google Maps & Local SEO</option>
+              <option>Business Profile Setup</option>
+              <option>Full AI Transformation</option>
+            </select>
+          </div>
+          <div class="fg"><label>Tell us about your business</label><textarea
+              placeholder="Describe your business, current challenges, and what you'd like to achieve..."></textarea>
+          </div>
+          <button class="form-sub" onclick="submitForm(this)"><i class="ti ti-send"></i>Send Message</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="f-brand">
+          <a href="#" aria-label="TagMePK">
+            <img src="1000708909.png" alt="TagMePK logo" class="f-logo" />
+          </a>
+          <p>Pakistan's premier AI Marketing Agency — helping businesses grow faster through artificial intelligence,
+            automation, and data-driven digital strategy.</p>
+
+          <div class="f-socials">
+            <a href="https://www.instagram.com/tagmepkofficial" target="_blank" class="f-soc" aria-label="Instagram"><i
+                class="ti ti-brand-instagram"></i></a>
+            <a href="https://www.facebook.com/tagmepkofficial" target="_blank" class="f-soc" aria-label="Facebook"><i
+                class="ti ti-brand-facebook"></i></a>
+            <a href="https://www.tiktok.com/@tagmepk" target="_blank" class="f-soc" aria-label="TikTok"><i
+                class="ti ti-brand-tiktok"></i></a>
+            <a href="#" class="f-soc" aria-label="LinkedIn"><i class="ti ti-brand-linkedin"></i></a>
+            <a href="#" class="f-soc" aria-label="YouTube"><i class="ti ti-brand-youtube"></i></a>
+          </div>
+
+        </div>
+
+        <div class="f-col">
+          <h4>Services</h4>
+          <ul class="f-links">
+            <li><a href="#services"><i class="ti ti-chevron-right"></i>AI Content Creation</a></li>
+            <li><a href="#services"><i class="ti ti-chevron-right"></i>Social Media</a></li>
+            <li><a href="#services"><i class="ti ti-chevron-right"></i>Ad Design</a></li>
+            <li><a href="#services"><i class="ti ti-chevron-right"></i>Website Development</a></li>
+            <li><a href="#services"><i class="ti ti-chevron-right"></i>AI Automation</a></li>
+            <li><a href="#services"><i class="ti ti-chevron-right"></i>Local SEO</a></li>
+          </ul>
+        </div>
+        <div class="f-col">
+          <h4>Company</h4>
+          <ul class="f-links">
+            <li><a href="#why"><i class="ti ti-chevron-right"></i>About Us</a></li>
+            <li><a href="#portfolio"><i class="ti ti-chevron-right"></i>Portfolio</a></li>
+            <li><a href="#pricing"><i class="ti ti-chevron-right"></i>Pricing</a></li>
+            <li><a href="#blog"><i class="ti ti-chevron-right"></i>Blog</a></li>
+            <li><a href="#faq"><i class="ti ti-chevron-right"></i>FAQ</a></li>
+            <li><a href="#contact"><i class="ti ti-chevron-right"></i>Contact</a></li>
+          </ul>
+        </div>
+        <div class="f-col f-news">
+          <h4>Stay Updated</h4>
+          <p>Get AI marketing tips and industry insights delivered to your inbox.</p>
+          <div class="nl-form">
+            <input type="email" placeholder="your@email.com">
+            <button>Subscribe</button>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 TagMePK – AI Marketing Agency. All rights reserved.</p>
+        <div class="f-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms & Conditions</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FLOAT BUTTONS -->
+  <a href="https://wa.me/923029804500" class="float-wa" aria-label="WhatsApp"><i class="ti ti-brand-whatsapp"></i></a>
+  <button class="float-top" id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top"><i
+      class="ti ti-arrow-up"></i></button>
+
+  <script>
+    // CANVAS PARTICLE FIELD
+    (function () {
+      const c = document.getElementById('canvas');
+      const ctx = c.getContext('2d');
+      let W, H, pts = [], stars = [], shoots = [];
+      const mouse = { x: 0, y: 0 };
+
+      function resize() { W = c.width = window.innerWidth; H = c.height = window.innerHeight; init(); }
+
+      function init() {
+        pts = [];
+        stars = [];
+        shoots = [];
+        const n = Math.floor(W * H / 18000);
+        for (let i = 0; i < n; i++) pts.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .25, vy: (Math.random() - .5) * .25, r: Math.random() * 1.2 + .4 });
+        // white stars layer (fewer, brighter, twinkling)
+        const s = Math.max(30, Math.floor(W * H / 60000));
+        for (let i = 0; i < s; i++) stars.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.6 + 0.6, parallax: 0.02 + Math.random() * 0.06, scrollParallax: 0.002 + Math.random() * 0.006, blink: Math.random() * 1000 });
+      }
+
+      function spawnShooting() {
+        // spawn from random edge toward opposite direction
+        const fromLeft = Math.random() > 0.5;
+        const y = Math.random() * H * 0.8 + H * 0.1;
+        const x = fromLeft ? -50 : W + 50;
+        const vx = fromLeft ? (2 + Math.random() * 3) : -(2 + Math.random() * 3);
+        const vy = (Math.random() - 0.5) * 0.6;
+        const len = 80 + Math.random() * 120;
+        const maxLife = Math.floor(40 + Math.random() * 60);
+        shoots.push({ x, y, vx, vy, len, life: maxLife, maxLife });
+      }
+
+      function draw() {
+        const t = performance.now();
+        ctx.clearRect(0, 0, W, H);
+
+        // green particle field (existing) - no connecting lines
+        pts.forEach(p => {
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+          if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(45,198,83,0.55)'; ctx.fill();
+        });
+
+        // white stars (twinkle + parallax with mouse and scroll) - no connecting lines
+        const centerX = W / 2, centerY = H / 2;
+        const cx = centerX;
+        const cy = centerY;
+        const scrollY = window.scrollY || 0;
+
+        ctx.save();
+        ctx.globalCompositeOperation = 'lighter';
+        stars.forEach((s, i) => {
+          const px = s.x + (cx - centerX) * s.parallax;
+          const py = s.y + (cy - centerY) * s.parallax + scrollY * s.scrollParallax;
+          const alpha = 0.7 + 0.25 * Math.sin((t + s.blink) * 0.01);
+          ctx.beginPath(); ctx.arc(px, py, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+          ctx.shadowBlur = 8; ctx.shadowColor = `rgba(255,255,255,${alpha})`;
+          ctx.fill();
+        });
+        ctx.restore();
+
+        // shooting stars
+        // occasionally spawn
+        if (Math.random() < 0.006) spawnShooting();
+        for (let i = shoots.length - 1; i >= 0; i--) {
+          const s = shoots[i];
+          // draw streak
+          const px = s.x;
+          const py = s.y;
+          const tx = s.x - s.vx * s.len;
+          const ty = s.y - s.vy * s.len;
+          const a = s.life / s.maxLife;
+          const grad = ctx.createLinearGradient(px, py, tx, ty);
+          grad.addColorStop(0, `rgba(255,255,255,${0.95 * a})`);
+          grad.addColorStop(0.5, `rgba(255,255,255,${0.45 * a})`);
+          grad.addColorStop(1, `rgba(255,255,255,${0.0})`);
+          ctx.save();
+          ctx.globalCompositeOperation = 'lighter';
+          ctx.strokeStyle = grad; ctx.lineWidth = 2.2 * a; ctx.lineCap = 'round';
+          ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(tx, ty); ctx.stroke();
+          ctx.restore();
+
+          // update
+          s.x += s.vx; s.y += s.vy; s.life -= 1;
+          if (s.life <= 0 || s.x < -200 || s.x > W + 200) shoots.splice(i, 1);
+        }
+
+        requestAnimationFrame(draw);
+      }
+
+      // scroll interactivity only (mouse parallax removed)
+      window.addEventListener('scroll', () => { /* scroll captured in draw() for subtle parallax */ });
+
+      resize(); window.addEventListener('resize', resize); draw();
+    })();
+
+    // NAV
+    const nav = document.getElementById('nav');
+    const btt = document.getElementById('btt');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('solid', scrollY > 60);
+      btt.classList.toggle('vis', scrollY > 500);
+    });
+
+    // MOBILE MENU
+    document.getElementById('ham').addEventListener('click', () => document.getElementById('mob').classList.add('open'));
+    document.getElementById('mobClose').addEventListener('click', () => document.getElementById('mob').classList.remove('open'));
+    function closeMob() { document.getElementById('mob').classList.remove('open') }
+
+    // REVEAL
+    const rvEls = document.querySelectorAll('.rv,.rv-l,.rv-r');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target) } });
+    }, { threshold: .08, rootMargin: '0px 0px -30px 0px' });
+    rvEls.forEach(el => obs.observe(el));
+
+    // COUNTER
+    function counter(el, target) {
+      let start = 0; const dur = 1800; const t0 = performance.now();
+      const suffix = target === 95 ? '%' : '+';
+      (function step(now) {
+        const p = Math.min((now - t0) / dur, 1);
+        const ease = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(ease * target) + suffix;
+        if (p < 1) requestAnimationFrame(step);
+      })(t0);
+    }
+    const cObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting && e.target.dataset.target) {
+          counter(e.target, +e.target.dataset.target); cObs.unobserve(e.target)
+        }
+      });
+    }, { threshold: .5 });
+    document.querySelectorAll('[data-target]').forEach(el => cObs.observe(el));
+
+    // FAQ
+    function toggleFaq(btn) {
+      const body = btn.nextElementSibling;
+      const isOpen = body.classList.contains('open');
+      document.querySelectorAll('.faq-body').forEach(b => b.classList.remove('open'));
+      document.querySelectorAll('.faq-btn').forEach(b => b.classList.remove('open'));
+      if (!isOpen) { body.classList.add('open'); btn.classList.add('open') }
+    }
+
+    // FORM
+    function submitForm(btn) {
+      btn.innerHTML = '<i class="ti ti-check"></i> Sent! We\'ll be in touch within 4 hours';
+      btn.style.background = 'rgba(45,198,83,.25)';
+      btn.style.border = '1px solid rgba(45,198,83,.4)';
+      btn.disabled = true;
+    }
+  </script>
+</body>
+
+</html>
