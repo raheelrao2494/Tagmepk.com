@@ -10,6 +10,7 @@
     href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+
   <style>
     *,
     *::before,
@@ -1053,7 +1054,8 @@
     .process-spine {
       position: relative;
       max-width: 800px;
-      margin: 0 auto
+      margin: 0 auto;
+      --process-progress: 0;
     }
 
     .process-spine::before {
@@ -1062,9 +1064,25 @@
       left: 50%;
       top: 0;
       bottom: 0;
-      width: 1px;
-      background: linear-gradient(180deg, transparent, var(--blue) 15%, var(--green) 85%, transparent);
-      transform: translateX(-50%)
+      width: 4px;
+      background: rgba(26, 110, 255, .25);
+      transform: translateX(-50%);
+      border-radius: 999px;
+    }
+
+    .process-spine::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      width: 8px;
+      height: calc(var(--process-progress) * 100%);
+      background: linear-gradient(180deg, var(--green), rgba(45, 198, 83, .55));
+      transform: translateX(-50%);
+      border-radius: 999px;
+      transition: height .45s ease, background .45s ease;
+      box-shadow: 0 0 20px rgba(45, 198, 83, .18);
+      z-index: 0;
     }
 
     .p-row {
@@ -1087,6 +1105,19 @@
       text-align: right
     }
 
+    .p-row {
+      opacity: .36;
+      filter: blur(0.7px);
+      transform: translateY(20px);
+      transition: opacity .65s ease, transform .65s ease, filter .65s ease;
+    }
+
+    .p-row.active {
+      opacity: 1;
+      filter: none;
+      transform: translateY(0);
+    }
+
     .p-node {
       width: 56px;
       height: 56px;
@@ -1106,11 +1137,23 @@
       z-index: 1
     }
 
-    .p-node.active,
-    .p-node:hover {
+    .p-node.active {
       border-color: var(--green);
       color: var(--green);
-      box-shadow: 0 0 30px rgba(45, 198, 83, .2)
+      box-shadow: 0 0 30px rgba(45, 198, 83, .2);
+      background: rgba(45, 198, 83, .08);
+    }
+
+    .p-row:not(.active) .p-node {
+      border-color: rgba(255, 255, 255, .1);
+      color: rgba(238, 242, 255, .55);
+      box-shadow: none;
+      background: rgba(255, 255, 255, .03);
+    }
+
+    .p-row:not(.active) .p-label,
+    .p-row:not(.active) .p-desc {
+      color: rgba(238, 242, 255, .45);
     }
 
     .p-label {
@@ -2700,6 +2743,8 @@
       }
     }
   </style>
+
+
 </head>
 
 <body>
@@ -2707,6 +2752,8 @@
   <canvas id="canvas"></canvas>
 
   <!-- ═══ NAV ═══ -->
+
+
   <nav id="nav">
     <div class="wrap">
       <div class="nav-wrap">
@@ -2730,7 +2777,11 @@
     </div>
   </nav>
 
+
+
   <!-- MOBILE MENU -->
+
+
   <div class="mob-menu" id="mob">
     <button class="mob-close" id="mobClose">✕</button>
     <a href="#services" onclick="closeMob()">Services</a>
@@ -2742,7 +2793,10 @@
         class="ti ti-calendar-event"></i>Book Consultation</a>
   </div>
 
+
   <!-- ═══ HERO ═══ -->
+
+
   <section class="hero" id="home">
     <div class="hero-aura">
       <div class="hero-grid"></div>
@@ -2821,7 +2875,10 @@
     </div>
   </section>
 
+
   <!-- ═══ TRUSTED ═══ -->
+
+
   <div class="trusted">
     <div class="wrap">
       <p class="trusted-label">Trusted by growing businesses across Pakistan & globally</p>
@@ -2836,7 +2893,10 @@
     </div>
   </div>
 
+
   <!-- ═══ WHY TAGMEPK ═══ -->
+
+
   <section class="why" id="why">
     <div class="wrap">
       <div class="why-layout">
@@ -2902,7 +2962,10 @@
     </div>
   </section>
 
+
   <!-- ═══ SERVICES ═══ -->
+
+
   <section class="services" id="services">
     <div class="wrap">
       <div class="services-intro rv">
@@ -2950,16 +3013,6 @@
         </div>
         <div class="svc-card rv">
           <div class="svc-arrow"><i class="ti ti-arrow-up-right"></i></div>
-          <div class="svc-num">04</div>
-          <div class="svc-icon-wrap" style="background:rgba(26,110,255,.12);color:var(--blue)"><i
-              class="ti ti-code"></i></div>
-          <h3>Website Development</h3>
-          <p>Responsive, fast, SEO-optimized websites built with conversion at the center of every design decision.</p>
-          <div class="svc-tags"><span class="s-tag">Business Sites</span><span class="s-tag">Landing Pages</span><span
-              class="s-tag">UI/UX</span><span class="s-tag">SEO</span></div>
-        </div>
-        <div class="svc-card rv">
-          <div class="svc-arrow"><i class="ti ti-arrow-up-right"></i></div>
           <div class="svc-num">05</div>
           <div class="svc-icon-wrap" style="background:rgba(45,198,83,.12);color:var(--green)"><i
               class="ti ti-robot"></i></div>
@@ -2996,7 +3049,10 @@
     </div>
   </section>
 
+
   <!-- ═══ INDUSTRIES ═══ -->
+
+
   <section class="industries" id="industries">
     <div class="wrap">
       <div class="industries-inner">
@@ -3025,7 +3081,10 @@
     </div>
   </section>
 
+
   <!-- ═══ PROCESS ═══ -->
+
+
   <section class="process" id="process">
     <div class="wrap">
       <div class="process-header rv">
@@ -3035,7 +3094,7 @@
           results.</p>
       </div>
       <div class="process-spine">
-        <div class="p-row rv">
+        <div class="p-row rv active">
           <div class="p-content right">
             <div class="p-label">Discovery</div>
             <div class="p-desc">Understand your business, goals, competitors, and current digital presence.</div>
@@ -3103,7 +3162,10 @@
     </div>
   </section>
 
+
   <!-- ═══ AI SOLUTIONS ═══ -->
+
+
   <section class="ai-sol" id="solutions">
     <div class="wrap">
       <div class="ai-sol-layout">
@@ -3207,7 +3269,10 @@
     </div>
   </section>
 
+
   <!-- ═══ STATS ═══ -->
+
+
   <div class="stats-band">
     <div class="wrap">
       <div class="stats-row">
@@ -3227,7 +3292,10 @@
     </div>
   </div>
 
+
   <!-- ═══ PORTFOLIO ═══ -->
+
+
   <section class="portfolio" id="portfolio">
     <div class="wrap">
       <div class="port-header rv">
@@ -3308,7 +3376,10 @@
     </div>
   </section>
 
+
   <!-- ═══ TESTIMONIALS ═══ -->
+
+
   <section class="testimonials" id="testimonials">
     <div class="wrap">
       <div class="rv" style="text-align:center">
@@ -3359,7 +3430,10 @@
     </div>
   </section>
 
+
   <!-- ═══ PRICING ═══ -->
+
+
   <section class="pricing" id="pricing">
     <div class="wrap">
       <div class="price-header rv">
@@ -3419,7 +3493,10 @@
     </div>
   </section>
 
+
   <!-- ═══ FAQ ═══ -->
+
+
   <section class="faq" id="faq">
     <div class="wrap">
       <div class="faq-layout">
@@ -3515,7 +3592,10 @@
     </div>
   </section>
 
+
   <!-- ═══ BLOG ═══ -->
+
+
   <section class="blog" id="blog">
     <div class="wrap">
       <div class="blog-header rv">
@@ -3566,7 +3646,10 @@
     </div>
   </section>
 
+
   <!-- ═══ FINAL CTA ═══ -->
+
+
   <section class="cta-band">
     <div class="cta-aura"></div>
     <div class="wrap">
@@ -3583,7 +3666,10 @@
     </div>
   </section>
 
+
   <!-- ═══ CONTACT ═══ -->
+
+
   <section class="contact" id="contact">
     <div class="wrap">
       <div class="rv" style="text-align:center;margin-bottom:56px">
@@ -3665,7 +3751,10 @@
     </div>
   </section>
 
+
   <!-- ═══ FOOTER ═══ -->
+
+
   <footer>
     <div class="wrap">
       <div class="footer-grid">
@@ -3730,7 +3819,10 @@
     </div>
   </footer>
 
+
   <!-- FLOAT BUTTONS -->
+
+
   <a href="https://wa.me/923029804500" class="float-wa" aria-label="WhatsApp"><i class="ti ti-brand-whatsapp"></i></a>
   <button class="float-top" id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top"><i
       class="ti ti-arrow-up"></i></button>
@@ -3740,15 +3832,24 @@
     (function () {
       const c = document.getElementById('canvas');
       const ctx = c.getContext('2d');
-      let W, H, pts = [], stars = [], shoots = [];
+      let W, H, pts = [], stars = [], shoots = [], collisions = [];
       const mouse = { x: 0, y: 0 };
+      const processSection = document.querySelector('.process');
+      let processNearSection = false;
 
-      function resize() { W = c.width = window.innerWidth; H = c.height = window.innerHeight; init(); }
+      function updateProcessVisibility() {
+        if (!processSection) return;
+        const rect = processSection.getBoundingClientRect();
+        processNearSection = rect.top < window.innerHeight * 0.85 && rect.bottom > -window.innerHeight * 0.15;
+      }
+
+      function resize() { W = c.width = window.innerWidth; H = c.height = window.innerHeight; init(); updateProcessVisibility(); }
 
       function init() {
         pts = [];
         stars = [];
         shoots = [];
+        collisions = [];
         const n = Math.floor(W * H / 18000);
         for (let i = 0; i < n; i++) pts.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .25, vy: (Math.random() - .5) * .25, r: Math.random() * 1.2 + .4 });
         // white stars layer (fewer, brighter, twinkling)
@@ -3797,8 +3898,63 @@
           ctx.fillStyle = `rgba(255,255,255,${alpha})`;
           ctx.shadowBlur = 8; ctx.shadowColor = `rgba(255,255,255,${alpha})`;
           ctx.fill();
+
+          for (let j = i + 1; j < stars.length; j++) {
+            const s2 = stars[j];
+            const dx = s2.x - s.x;
+            const dy = s2.y - s.y;
+            const dist = Math.hypot(dx, dy);
+            if (dist < s.r + s2.r + 4) {
+              if (processNearSection && Math.random() < 0.04) {
+                collisions.push({
+                  x: (s.x + s2.x) / 2,
+                  y: (s.y + s2.y) / 2,
+                  r: 0,
+                  max: 18 + Math.random() * 12,
+                  alpha: 1,
+                  hue: 190 + Math.random() * 30
+                });
+              }
+            }
+          }
         });
         ctx.restore();
+
+        // collision bursts
+        if (collisions.length) {
+          ctx.save();
+          ctx.globalCompositeOperation = 'lighter';
+          collisions.forEach((burst, index) => {
+            const glow = 0.18 * burst.alpha;
+            ctx.beginPath();
+            ctx.arc(burst.x + (cx - centerX) * 0.01, burst.y + (cy - centerY) * 0.01 + scrollY * 0.002, burst.r, 0, Math.PI * 2);
+            ctx.strokeStyle = `hsla(${burst.hue}, 100%, 85%, ${burst.alpha})`;
+            ctx.lineWidth = 2 + burst.alpha * 2;
+            ctx.shadowBlur = 18;
+            ctx.shadowColor = `hsla(${burst.hue}, 100%, 85%, ${glow})`;
+            ctx.stroke();
+            for (let s = 0; s < 6; s++) {
+              const angle = (Math.PI * 2 / 6) * s + burst.r * 0.1;
+              const lx = burst.x + Math.cos(angle) * (burst.r + 4);
+              const ly = burst.y + Math.sin(angle) * (burst.r + 4);
+              ctx.beginPath();
+              ctx.moveTo(burst.x, burst.y);
+              ctx.lineTo(lx, ly);
+              ctx.strokeStyle = `hsla(${burst.hue}, 100%, 85%, ${burst.alpha * 0.55})`;
+              ctx.lineWidth = 1.2;
+              ctx.stroke();
+            }
+          });
+          ctx.restore();
+        }
+
+        collisions = collisions.filter(burst => {
+          burst.r += 1.2 + Math.random() * 0.9;
+          burst.alpha -= 0.03;
+          return burst.alpha > 0;
+        });
+
+        updateProcessVisibility();
 
         // shooting stars
         // occasionally spawn
@@ -3855,6 +4011,34 @@
     }, { threshold: .08, rootMargin: '0px 0px -30px 0px' });
     rvEls.forEach(el => obs.observe(el));
 
+    // PROCESS TIMELINE SCROLL ACTIVATION
+    const processRows = Array.from(document.querySelectorAll('.process .p-row'));
+    const processObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          const node = entry.target.querySelector('.p-node');
+          if (node) node.classList.add('active');
+        }
+      });
+    }, { threshold: 0.35, rootMargin: '0px 0px -20% 0px' });
+    processRows.forEach(row => processObserver.observe(row));
+
+    const processSpine = document.querySelector('.process-spine');
+    const updateProcessSpine = () => {
+      if (!processSpine || !processRows.length) return;
+      const offset = window.innerHeight * 0.48;
+      let activeIndex = 0;
+      processRows.forEach((row, index) => {
+        const rect = row.getBoundingClientRect();
+        if (rect.top < offset) activeIndex = Math.max(activeIndex, index + 1);
+      });
+      processSpine.style.setProperty('--process-progress', String(activeIndex / processRows.length));
+    };
+    window.addEventListener('scroll', updateProcessSpine, { passive: true });
+    window.addEventListener('resize', updateProcessSpine);
+    updateProcessSpine();
+
     // COUNTER
     function counter(el, target) {
       let start = 0; const dur = 1800; const t0 = performance.now();
@@ -3892,7 +4076,10 @@
       btn.disabled = true;
     }
 
+
     // MOBILE SERVICE ACCORDION
+
+
     document.addEventListener('DOMContentLoaded', () => {
       const mobileToggle = () => window.innerWidth <= 640;
       document.querySelectorAll('.svc-card').forEach(card => {
