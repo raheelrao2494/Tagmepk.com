@@ -2299,30 +2299,299 @@
     }
 
     /* ─── FLOATS ─── */
-    .float-wa {
+    .chat-widget {
       position: fixed;
-      bottom: 84px;
-      right: 26px;
-      width: 54px;
-      height: 54px;
-      background: #25D366;
-      border-radius: 50%;
+      bottom: 22px;
+      right: 20px;
+      z-index: 9999;
       display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+      pointer-events: auto;
+    }
+
+    .chat-toggle {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(45, 198, 83, 1), rgba(26, 110, 255, 1));
+      border: none;
+      color: #fff;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 26px;
-      box-shadow: 0 4px 24px rgba(37, 211, 102, .4);
-      z-index: 50;
-      transition: transform .25s
+      font-size: 24px;
+      box-shadow: 0 16px 40px rgba(10, 22, 40, .22);
+      position: relative;
+      cursor: pointer;
+      transition: transform .25s, box-shadow .25s;
     }
 
-    .float-wa:hover {
-      transform: scale(1.1)
+    .chat-toggle:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 20px 48px rgba(10, 22, 40, .26);
     }
 
-    .float-wa .ti {
-      font-size: 26px;
-      color: #fff
+    .chat-dot {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 0 rgba(255, 255, 255, 0.7);
+      animation: pulse 1.8s infinite;
+    }
+
+    .chat-panel {
+      width: 360px;
+      max-width: min(92vw, 360px);
+      background: rgba(10, 18, 34, .98);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 28px;
+      box-shadow: 0 24px 80px rgba(10, 22, 40, .35);
+      overflow: hidden;
+      backdrop-filter: blur(30px);
+      opacity: 0;
+      transform: translateY(16px) scale(0.98);
+      transform-origin: bottom right;
+      pointer-events: none;
+      transition: opacity .35s ease, transform .35s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-panel.open {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: all;
+    }
+
+    .chat-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
+      background: rgba(255, 255, 255, .02);
+    }
+
+    .chat-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(26, 110, 255, .12), rgba(45, 198, 83, .15));
+      color: var(--green);
+      font-size: 22px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+    }
+
+    .chat-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .chat-subtitle {
+      font-size: 12px;
+      color: rgba(238, 242, 255, .62);
+      line-height: 1.4;
+    }
+
+    .chat-close {
+      margin-left: auto;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,.04);
+      color: rgba(238, 242, 255, .8);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background .25s;
+    }
+
+    .chat-close:hover {
+      background: rgba(255,255,255,.1);
+    }
+
+    .chat-body {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 18px 20px;
+      min-height: 320px;
+      max-height: 380px;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+      background: linear-gradient(180deg, rgba(10,18,34,.95), rgba(10,18,34,.99));
+    }
+
+    .chat-message {
+      max-width: 100%;
+      display: inline-flex;
+      flex-direction: column;
+      gap: 8px;
+      animation: fadeIn .28s ease;
+    }
+
+    .chat-message.ai {
+      align-self: flex-start;
+      background: rgba(45, 198, 83, .1);
+      border: 1px solid rgba(45, 198, 83, .16);
+      color: #fff;
+      border-radius: 22px 22px 22px 6px;
+      padding: 14px 16px;
+      box-shadow: 0 18px 40px rgba(9,16,28,.14);
+      backdrop-filter: blur(8px);
+    }
+
+    .chat-message.user {
+      align-self: flex-end;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      color: #fff;
+      border-radius: 22px 22px 6px 22px;
+      padding: 14px 16px;
+    }
+
+    .chat-footer {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 20px 20px;
+      background: rgba(15, 24, 44, .98);
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+
+    .chat-footer input {
+      width: 100%;
+      min-height: 44px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.04);
+      color: #fff;
+      padding: 12px 14px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .chat-footer input::placeholder {
+      color: rgba(255,255,255,.5);
+    }
+
+    .chat-send {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      border: none;
+      background: linear-gradient(135deg, rgba(45, 198, 83, 1), rgba(26, 110, 255, 1));
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      cursor: pointer;
+      transition: transform .2s;
+    }
+
+    .chat-send:hover {
+      transform: translateY(-1px);
+    }
+
+    .typing-indicator {
+      display: none;
+      gap: 6px;
+      align-items: center;
+      padding-left: 4px;
+    }
+
+    .typing-indicator span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.6);
+      animation: typingPulse 1.2s infinite;
+    }
+
+    .typing-indicator span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .typing-indicator span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    .typing-indicator.visible {
+      display: inline-flex;
+    }
+
+    .chat-quick-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      padding: 0 20px 18px;
+      background: rgba(10, 18, 34, .96);
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+
+    .chat-quick-button {
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.04);
+      color: #fff;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all .25s;
+      text-align: center;
+    }
+
+    .chat-quick-button:hover {
+      background: rgba(45, 198, 83, .12);
+      border-color: rgba(45, 198, 83, .25);
+    }
+
+    .chat-widget::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes typingPulse {
+      0%, 100% { opacity: .4; transform: translateY(0); }
+      50% { opacity: 1; transform: translateY(-4px); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: .35; }
+    }
+
+    @media(max-width:640px) {
+      .chat-widget {
+        bottom: 20px;
+        right: 16px;
+      }
+
+      .chat-panel {
+        width: min(100vw - 32px, 100%);
+        max-width: 100%;
+        border-radius: 24px;
+      }
     }
 
     .float-top {
@@ -3824,7 +4093,31 @@
   <!-- FLOAT BUTTONS -->
 
 
-  <a href="https://wa.me/923029804500" class="float-wa" aria-label="WhatsApp"><i class="ti ti-brand-whatsapp"></i></a>
+  <div class="chat-widget" aria-label="TAGMEPK AI Assistant">
+    <button class="chat-toggle" id="chatToggle" aria-label="Open chatbot">
+      <span class="chat-dot"></span>
+      <i class="ti ti-robot"></i>
+    </button>
+    <div class="chat-panel" id="chatPanel" aria-hidden="true">
+      <div class="chat-header">
+        <div class="chat-avatar"><i class="ti ti-robot"></i></div>
+        <div>
+          <div class="chat-title">TAGMEPK AI Assistant</div>
+          <div class="chat-subtitle">Your professional AI sales partner</div>
+        </div>
+        <button class="chat-close" id="chatClose" aria-label="Close chatbot"><i class="ti ti-x"></i></button>
+      </div>
+      <div class="chat-body" id="chatBody" role="log" aria-live="polite"></div>
+      <div class="chat-footer">
+        <div class="typing-indicator" id="typingIndicator">
+          <span></span><span></span><span></span>
+        </div>
+        <input type="text" id="chatInput" placeholder="Type your message..." aria-label="Chat message input" autocomplete="off">
+        <button class="chat-send" id="chatSend" aria-label="Send message"><i class="ti ti-send"></i></button>
+      </div>
+      <div class="chat-quick-actions" id="chatQuickActions"></div>
+    </div>
+  </div>
   <button class="float-top" id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top"><i
       class="ti ti-arrow-up"></i></button>
 
@@ -3991,6 +4284,200 @@
 
       resize(); window.addEventListener('resize', resize); draw();
     })();
+
+    // CHATBOT
+    const chatToggle = document.getElementById('chatToggle');
+    const chatPanel = document.getElementById('chatPanel');
+    const chatClose = document.getElementById('chatClose');
+    const chatBody = document.getElementById('chatBody');
+    const chatInput = document.getElementById('chatInput');
+    const chatSend = document.getElementById('chatSend');
+    const typingIndicator = document.getElementById('typingIndicator');
+    const quickActions = document.getElementById('chatQuickActions');
+
+    const welcomeMessage = `👋 Hello! Welcome to TAGMEPK.\n\nI'm your AI Assistant, and I'm here to help you discover the right AI solutions for your business.`;
+    const quickReplies = [
+      'Tell me about AI Human Review Videos',
+      'Help me with social media',
+      'I need a website',
+      'How do I get a quote?',
+      'Show me SEO services',
+      'I want business automation'
+    ];
+
+    const serviceInfo = {
+      'ai human review videos': `Great choice! Our AI Human Review Videos are available in multiple languages and can be customized with different AI avatars, voices, and scripts.\n\nPricing starts from:\n• 30 Seconds — From Rs. 5,000\n• 60 Seconds — From Rs. 10,000\n\nFinal pricing depends on: language, duration, avatar, script, voice, and customizations.`,
+      'ai content creation': `AI Content Creation delivers blog posts, social captions, ad copy, email content, landing page copy, and more — all optimized for your audience.\n\nWhat is your main goal?`,
+      'social media management': `We manage your social presence end to end: strategy, content, scheduling, analytics, and optimization.\n\nWhat type of business do you have?`,
+      'creative ads': `Our Creative Ads are designed to capture attention, build desire, and drive action across Facebook, Instagram, TikTok, and Google.\n\nWhat is your main campaign goal?`,
+      'ai automation': `AI Automation helps you reduce manual work by automating marketing, sales, support, and operations.\n\nWould you like automation for lead qualification, email follow-up, customer support, or workflow automation?`,
+      'seo': `SEO Services improve your search visibility, attract qualified traffic, and help your website rank for the keywords your customers are searching for.\n\nWould you like help with local SEO, on-page optimization, technical SEO, or content SEO?`,
+      'business profile setup': `Business Profile Setup ensures your company is listed correctly across Google Business Profile and local directories.\n\nPlease share your business category and location so I can recommend the best package.`,
+      'website development': `We build fast, responsive, conversion-focused websites and landing pages tailored to your brand.\n\nWhat type of website do you need? Business website, landing page, ecommerce store, or portfolio site?`,
+      'graphic design': `Our Graphic Design services create premium visuals for ads, social media, brand assets, and marketing campaigns.\n\nWhat design asset do you need? Ads, social posts, brand identity, or print materials?`,
+    };
+
+    const fallbackMessage = `I'd love to help with that. Let me connect you with a TAGMEPK specialist who can provide the most accurate information.`;
+
+    function createMessage(text, type = 'ai') {
+      const message = document.createElement('div');
+      message.className = `chat-message ${type}`;
+      text.split('\n').filter(Boolean).forEach(line => {
+        const p = document.createElement('p');
+        p.textContent = line;
+        message.appendChild(p);
+      });
+      return message;
+    }
+
+    function addBotMessage(text) {
+      const msg = createMessage(text, 'ai');
+      chatBody.appendChild(msg);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    function addUserMessage(text) {
+      const msg = createMessage(text, 'user');
+      chatBody.appendChild(msg);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    function showTyping() {
+      typingIndicator.classList.add('visible');
+    }
+
+    function hideTyping() {
+      typingIndicator.classList.remove('visible');
+    }
+
+    function respond(text) {
+      showTyping();
+      setTimeout(() => {
+        hideTyping();
+        addBotMessage(text);
+      }, 900);
+    }
+
+    function normalize(text) {
+      return text.trim().toLowerCase();
+    }
+
+    function getServiceResponse(text) {
+      const normalized = normalize(text);
+      for (const key of Object.keys(serviceInfo)) {
+        if (normalized.includes(key) || normalized.includes(key.replace(/\s+/g, ''))) {
+          return serviceInfo[key];
+        }
+      }
+      return null;
+    }
+
+    function askForQuote() {
+      respond(`Pricing varies by project requirements. I can help prepare an accurate quotation once I know:\n1. Your business type or industry\n2. Which service you need\n3. Your expected timeline or launch date\n4. Your main goal (sales, leads, traffic, branding)`);
+      addQuickActions(['I need a quote', 'I have a business website project', 'Show me service recommendations']);
+    }
+
+    function handleMessage(input) {
+      const text = normalize(input);
+      if (!text) return;
+
+      if (text.match(/^(hi|hello|hey|good morning|good afternoon|greetings)/)) {
+        respond(`Hello there! 😊 I’m the TAGMEPK AI Assistant. How can I help you grow your business today?`);
+        addQuickActions(['Tell me about AI Human Review Videos', 'I need a website', 'How do I get a quote?', 'Show me SEO services']);
+        return;
+      }
+
+      if (text.includes('quote') || text.includes('pricing') || text.includes('cost') || text.includes('estimate')) {
+        askForQuote();
+        return;
+      }
+
+      if (text.includes('marketing') && !text.includes('social')) {
+        respond(`What type of business do you have?\n• Restaurant\n• Real Estate\n• E-commerce\n• Healthcare\n• Other\n\nOnce I know your business, I can recommend the best AI marketing package.`);
+        addQuickActions(['Restaurant', 'Real Estate', 'E-commerce', 'Healthcare', 'Other']);
+        return;
+      }
+
+      const serviceResponse = getServiceResponse(text);
+      if (serviceResponse) {
+        respond(serviceResponse + `\n\nWould you like me to prepare a custom quotation for this service?`);
+        addQuickActions(['Yes, please send a quote', 'Tell me more about packages', 'I have a specific project']);
+        return;
+      }
+
+      if (text.includes('thank')) {
+        respond(`You’re welcome! If you want, I can help you with a quotation or connect you to a TAGMEPK specialist.`);
+        addQuickActions(['Provide a quote', 'Connect me to a specialist', 'Show services']);
+        return;
+      }
+
+      if (text.includes('other') || text.includes('not sure') || text.includes('something else')) {
+        respond(`No problem. Tell me a bit about your business and your main goal, and I'll recommend the best service.`);
+        addQuickActions(['I want more leads', 'I need better branding', 'I want more sales', 'I need a website']);
+        return;
+      }
+
+      respond(fallbackMessage);
+      addQuickActions(['Tell me about AI Content Creation', 'How do I get a quote?', 'I need help with marketing']);
+    }
+
+    function openChat() {
+      chatPanel.classList.add('open');
+      chatPanel.setAttribute('aria-hidden', 'false');
+      if (!chatBody.querySelector('.chat-message')) {
+        addBotMessage(welcomeMessage);
+        addQuickActions(quickReplies);
+      }
+      chatInput.focus();
+    }
+
+    function closeChat() {
+      chatPanel.classList.remove('open');
+      chatPanel.setAttribute('aria-hidden', 'true');
+    }
+
+    function addQuickActions(items) {
+      quickActions.innerHTML = '';
+      items.forEach(item => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'chat-quick-button';
+        btn.textContent = item;
+        btn.addEventListener('click', () => {
+          if (!chatPanel.classList.contains('open')) openChat();
+          addUserMessage(item);
+          handleMessage(item);
+        });
+        quickActions.appendChild(btn);
+      });
+    }
+
+    chatToggle.addEventListener('click', () => {
+      if (chatPanel.classList.contains('open')) {
+        closeChat();
+      } else {
+        openChat();
+      }
+    });
+
+    chatClose.addEventListener('click', closeChat);
+
+    chatSend.addEventListener('click', () => {
+      const text = chatInput.value.trim();
+      if (!text) return;
+      addUserMessage(text);
+      chatInput.value = '';
+      handleMessage(text);
+    });
+
+    chatInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        chatSend.click();
+      }
+    });
+
+    addQuickActions(quickReplies);
 
     // NAV
     const nav = document.getElementById('nav');
